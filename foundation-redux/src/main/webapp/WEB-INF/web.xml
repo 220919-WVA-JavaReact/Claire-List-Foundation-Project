@@ -1,0 +1,43 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+    <display-name>Hello, Servlets!</display-name>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+    <display-name>My First Web App</display-name>
+
+    <!-- If I want to provide a servlet context variable I can do it out here, outside any individual servlet
+    declaration-->
+
+    <context-param>
+        <param-name>test-context-key</param-name>
+        <param-value>test-context-value</param-value>
+    </context-param>
+
+    <!-- For each servlet I'll need to define 2 things
+      The servlet itself and the mapping of the servlet -->
+
+    <servlet>
+        <servlet-name>TestServlet</servlet-name>
+        <servlet-class>com.revature.servlets.TestServlet</servlet-class>
+        <!-- To pass a value to a specific servlet upon creation we need to give it a servlet configuration -->
+        <init-param>
+            <param-name>test-init-key</param-name>
+            <param-value>test-init-value</param-value>
+        </init-param>
+
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TestServlet</servlet-name>
+        <url-pattern>/test</url-pattern>
+    </servlet-mapping>
+    <listener>
+        <listener-class>com.revature.util.ContextLoaderListener</listener-class>
+    </listener>
+</web-app>
+<!-- BE SURE TO CHANGE ME TO DIR STRUCTURE ACTUAL! -->
