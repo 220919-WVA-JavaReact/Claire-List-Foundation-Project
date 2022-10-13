@@ -2,7 +2,7 @@ package com.revature.util;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.revature.servlets.UserServlet;
+import com.revature.servlets.UserServlet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
             // We can also programmatically define/register our servlets with the container here
 
             ObjectMapper mapper = new ObjectMapper();
-           // UserServlet userServlet = new UserServlet(mapper); //CREATE ME!
+            UserServlet userServlet = new UserServlet(mapper);
 
             // Now I need to register it with the context itself
             ServletContext context = sce.getServletContext();
