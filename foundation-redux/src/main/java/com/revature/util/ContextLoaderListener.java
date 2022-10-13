@@ -2,6 +2,7 @@ package com.revature.util;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.servlets.TestServlet;
 import com.revature.servlets.UserServlet;
 
 import javax.servlet.ServletContext;
@@ -30,10 +31,10 @@ import java.time.LocalDateTime;
             registeredServlet.setInitParameter("user-servlet-key", "user-servlet-value");
             registeredServlet.setInitParameter("another-param", "another-value");
 
-        /*
-        ExampleServlet exampleServlet = new ExampleServlet(mapper);
+
+        TestServlet exampleServlet = new TestServlet(); //...lets see
         context.addServlet("ExampleServlet", exampleServlet).addMapping("/examples");
-         */
+
         }
 
         @Override
