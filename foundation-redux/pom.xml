@@ -32,11 +32,11 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>javax</groupId>-->
+<!--            <artifactId>javaee-api</artifactId>-->
+<!--            <version>7.0</version>-->
+<!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
         <dependency>
@@ -57,7 +57,7 @@
                     <configuration>
                         <url>http://localhost:8080/manager/text</url>
                         <server>TomcatServer</server>
-                        <path>/foundation</path>
+                        <path>/project</path>
                     </configuration>
                 </plugin>
                 <plugin>
