@@ -26,6 +26,7 @@ public class User {
     }
 
     public User(){} //no args, in case we need it :-) as a treat :-)
+    
 
     public String setUser_name() {
         this.user_name = user_name;
