@@ -36,8 +36,8 @@
         <servlet-name>TestServlet</servlet-name>
         <url-pattern>/test</url-pattern>
     </servlet-mapping>
-    <listener>
-        <listener-class>com.revature.util.ContextLoaderListener</listener-class>
-    </listener>
+<!--    <listener>-->
+<!--        <listener-class>com.revature.util.ContextLoaderListener</listener-class>-->
+<!--    </listener>-->
 </web-app>
 <!-- BE SURE TO CHANGE ME TO DIR STRUCTURE ACTUAL! -->
