@@ -36,7 +36,7 @@ public class UserServlet extends HttpServlet {
         // do the reverse process
 
         // Let's emulate a value that may come from some data source
-        User someUser = new User(123, "John", "Smithye", "password", "e@mail.com", 2); //FIX this constructor!
+        User someUser = new User(123, "John", "Smithye", "jsmithy", "password", "e@mail.com", 2); //FIX this constructor!
 
         // We want to convert this Java Object into some sort of JSON string
         String respPayload = mapper.writeValueAsString(someUser);
