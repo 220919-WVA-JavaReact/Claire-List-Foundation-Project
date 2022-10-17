@@ -3,7 +3,7 @@ package com.revature.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import io.github.cdimascio.dotenv.Dotenv;
+import java.util.Properties; //jproperties refactor
 
 public class ConnectionUtil{
 
@@ -25,12 +25,12 @@ public class ConnectionUtil{
             return null;
         }
 
-        //setup env variables by ! the 'run' menu and choosing uhhh edit configurations!
-        String url = dt.get("url");
-        String username = dt.get("username");
-        String password = dt.get("password");
+
 
         try {
+            String url = dt.get("url");
+            String username = dt.get("username");
+            String password = dt.get("password");
             conn = DriverManager.getConnection(url, username, password);
             System.out.println("GOT connection to the specified database!");
         } catch (SQLException e) {

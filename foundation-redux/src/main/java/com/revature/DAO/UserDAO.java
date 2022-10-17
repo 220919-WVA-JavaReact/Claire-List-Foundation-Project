@@ -56,7 +56,7 @@ public class UserDAO implements UserDAOint { //need to create a User INTERFACE, 
             String sql = "INSERT INTO users (first_name, last_name, user_name, email, password, role_num) VALUES (?,?,?,?,?,?) RETURNING *";
 
             //...remmber to PREPARE the statement !
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            PreparedStatement stmt = conn.prepareStatement(sql); //this is failing. Investigating...
 
             stmt.setString(1, first_name);
             stmt.setString(2, last_name);
