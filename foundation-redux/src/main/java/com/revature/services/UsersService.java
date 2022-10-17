@@ -6,6 +6,7 @@ import com.revature.models.User;
 import com.revature.DAO.UserDAO;
 
 public class UsersService {
+    //TODO:: CREATE GET ALL USERS METHOD SO WE CAN XOMPARE USERNAMES ON REGISTER, REJECT IF USERNAME IS NOT UNIQUE!
     UserDAO ud = new UserDAO(); //instanceOf the user DAO we created! :-)
     Scanner io = new Scanner(System.in); //"input/output" ie
 
