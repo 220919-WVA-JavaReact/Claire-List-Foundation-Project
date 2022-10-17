@@ -18,7 +18,7 @@ public class Ticket {
         this.status = status;
     }
 
-    public Ticket() {
+    public Ticket() { //change me, should have default vals
     }
 
 
