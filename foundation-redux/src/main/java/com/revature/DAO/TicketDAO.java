@@ -8,7 +8,7 @@ import java.util.List;
 //also feed this user's user_name to getAllTickets() (--> manager's thing) !
 
 import com.revature.models.Ticket;
-public class TicketDAO implements TicketDAOint {
+public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS(), GETTICKETSBYSTATUS(DENIED, APPROVED)
     @Override
     public Ticket createTicket(String reason, float amount, int created_by) {
         Ticket ticket = new Ticket();
