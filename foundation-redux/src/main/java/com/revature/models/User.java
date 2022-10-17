@@ -1,16 +1,23 @@
 package com.revature.models;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 public class User {
     //...fields
     //... prevent mutatability here by using getters and setters!
 
     private int user_id;
-
+    @JsonProperty
     private String first_name;
+    @JsonProperty
     private String last_name;
+    @JsonProperty
     private String user_name;
+    @JsonProperty
     private String email;
+    @JsonProperty
     private String password;
+    @JsonProperty
     private int role_num; //1 for employee, 2 for manager ie
 
     //NOW we want to be able to call with both arguments and no-arg constructor! This way, on user create we are not calling something that does not exist yet!
@@ -44,8 +51,8 @@ public class User {
         return role_num;
     }
     public int setRole_num(){
-        this.user_id = user_id;
-        return this.user_id;
+        this.role_num = role_num;
+        return this.role_num;
     }
 
     public String getFirst_name() {

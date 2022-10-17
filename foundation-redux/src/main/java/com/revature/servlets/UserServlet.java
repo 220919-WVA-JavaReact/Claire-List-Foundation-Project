@@ -52,19 +52,11 @@ public class UserServlet extends HttpServlet {
         // POST requests are generally used for the creation of data in an application
         System.out.println("[LOG] - UserServlet received a POST request at " + LocalDateTime.now());
 
-        // To Print out from our input stream
-//        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(req.getInputStream()));
-//        String line;
-//        while ((line = bufferedReader.readLine()) != null){
-//            System.out.println(line);
-//        }
-
         User newUser = mapper.readValue(req.getInputStream(), User.class);
         // At this point newUser could be sent to a service layer for validation which would then send it to
         // the DAO layer to be created in the DB
-       // System.out.println(newUser);
         UsersService us = new UsersService();
-        us.register(newUser); //fix up register() method to take an arg
+        us.register(newUser);
 
         resp.setStatus(204);
 

@@ -3,6 +3,7 @@ package com.revature.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class ConnectionUtil{
 
@@ -12,6 +13,7 @@ public class ConnectionUtil{
 
     // I check if a connectioh exists an dif so, use it, or create a new connection!
     public static Connection getConnection(){
+        Dotenv dt = Dotenv.load();
         try{
             if (conn != null && !conn.isClosed()){
                 System.out.println("Use a previously made connection");
@@ -24,9 +26,9 @@ public class ConnectionUtil{
         }
 
         //setup env variables by ! the 'run' menu and choosing uhhh edit configurations!
-        String url = System.getenv("url");
-        String username = System.getenv("username");
-        String password = System.getenv("password");
+        String url = dt.get("url");
+        String username = dt.get("username");
+        String password = dt.get("password");
 
         try {
             conn = DriverManager.getConnection(url, username, password);
