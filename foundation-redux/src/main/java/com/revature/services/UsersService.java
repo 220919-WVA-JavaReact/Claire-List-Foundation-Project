@@ -33,38 +33,28 @@ public class UsersService {
         }
 
     }
-    public User register(){
-        System.out.println("Please enter your FIRST NAME.");
-        String first_name = io.nextLine();
+    public User register(User usr){ //I take an object, and register that object in the database!
+        //be sure to deprecate console functionality!
+//        System.out.println("Please enter your FIRST NAME.");
+//        String first_name = io.nextLine();
+//
+//        System.out.println("Please enter your LAST NAME.");
+//        String last_name = io.nextLine();
+//
+//        System.out.println("Please enter your USERNAME. Must be UNIQUE!");
+//        String user_name = io.nextLine();
+//
+//        System.out.println("Please enter your EMAIL.");
+//        String email = io.nextLine();
+//
+//        System.out.println("Please enter a new PASSWORD.");
+//        String password = io.nextLine();
+//
+//        System.out.println("Please enter your ROLE. 1 for employee, 2 for management.");
+//        int role_num = Integer.parseInt(io.nextLine()); //Im in love
 
-        System.out.println("Please enter your LAST NAME.");
-        String last_name = io.nextLine();
+        User user = ud.createUser(usr.getFirst_name(), usr.getLast_name(), usr.getUser_name(), usr.getPassword(), usr.getEmail(), usr.getRole_num());
 
-        System.out.println("Please enter your USERNAME. Must be UNIQUE!");
-        String user_name = io.nextLine();
-
-        System.out.println("Please enter your EMAIL.");
-        String email = io.nextLine();
-
-        System.out.println("Please enter a new PASSWORD.");
-        String password = io.nextLine();
-
-        System.out.println("Please enter your ROLE. 1 for employee, 2 for management.");
-        int role_num = Integer.parseInt(io.nextLine()); //Im in love
-
-        User user = ud.createUser(first_name, last_name, user_name, password, email, role_num);
-
-
-
-
-        //next, must check username is unique
-        //if (GetUsername = null),,
-        //proceed
-        //else throw an error!
-
-        //THEN NEXT,
-        String fullname = first_name + " " + last_name;
-        System.out.println("Your information is: " + fullname + " " + user_name );
         return user;
     }
 

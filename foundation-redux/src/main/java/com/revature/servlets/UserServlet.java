@@ -2,6 +2,7 @@ package com.revature.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.User; //CREATE ME!
+import com.revature.services.UsersService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
@@ -61,8 +62,9 @@ public class UserServlet extends HttpServlet {
         User newUser = mapper.readValue(req.getInputStream(), User.class);
         // At this point newUser could be sent to a service layer for validation which would then send it to
         // the DAO layer to be created in the DB
-        System.out.println(newUser);
-
+       // System.out.println(newUser);
+        UsersService us = new UsersService();
+        us.register(newUser); //fix up register() method to take an arg
 
         resp.setStatus(204);
 
