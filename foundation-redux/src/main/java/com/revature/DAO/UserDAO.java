@@ -41,7 +41,7 @@ public class UserDAO implements UserDAOint { //need to create a User INTERFACE, 
 
 
                 // NOW we create the user object!
-                user = new User(id,first,last,recUserN,password,email,role);
+                user = new User(id,first,last,recUserN,password,email,role); //change order of this!
             }
         } catch (SQLException e){
             e.printStackTrace();
