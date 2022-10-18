@@ -28,24 +28,21 @@ public class ConnectionUtil{
         }
 
 
-        String url = "";
-        String username = "";
-        String password = "";
-        Properties prop = new Properties();
+        String url;
+        String username;
+        String password;
+//        Properties prop = new Properties();
         try {
-            prop.load(new FileReader("C:\\Users\\Claire\\Desktop\\revature-training\\Foundation-Actual\\foundation-redux\\src\\main\\resources\\application.properties"));
-            url = prop.getProperty("url");
-            username = prop.getProperty("username");
-            password = prop.getProperty("password");
+//            prop.load(new FileReader("C:\\Users\\Claire\\Desktop\\revature-training\\Foundation-Actual\\foundation-redux\\src\\main\\resources\\application.properties"));
+//            url = prop.getProperty("url");
+//            username = prop.getProperty("username");
+//            password = prop.getProperty("password");
+
             conn = DriverManager.getConnection(url, username, password);
             System.out.println("GOT connection to the specified database!");
         } catch (SQLException e) {
             System.out.println("Failed connection to the database! :( Try again?");
             e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) { //jfor filereader, above
-            throw new RuntimeException(e);
         }
 
         return conn;
