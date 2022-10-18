@@ -33,10 +33,9 @@ import java.time.LocalDateTime;
             registeredServlet.setInitParameter("another-param", "another-value");
 
 
+            //future syntax, creating a servlet (1st line), then adding mapping to servlet, and adding that servlet to context
 //        TestServlet exampleServlet = new TestServlet(); //...lets see
 //        context.addServlet("ExampleServlet", exampleServlet).addMapping("/examples");
-       // UserServlet us = new UserServlet();
-        context.addServlet("UserServlet", userServlet).addMapping("/users"); //this hsouldn't be necessary right?
 
         }
 

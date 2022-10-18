@@ -14,11 +14,11 @@ public class UserDAO implements UserDAOint { //need to create a User INTERFACE, 
         User user = new User();
 
         //connect with resources fed to us !
-        try (Connection conn = ConnectionUtil.getConnection()){
+        try (Connection conn = ConnectionUtil.getConnection()){ //if i move connection declaration out of this, will it work?
             String sql = "SELECT * FROM users WHERE user_name = ?";
 
             //PREPARE it, to prevent SQL injection attacks (scary...)
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            PreparedStatement stmt = conn.prepareStatement(sql); //this is crapping out too now. Digging...
 
             //EYE set the string to the values
             stmt.setString(1, user_name);
