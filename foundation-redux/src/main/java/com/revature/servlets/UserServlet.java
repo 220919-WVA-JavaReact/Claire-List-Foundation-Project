@@ -58,15 +58,21 @@ public class UserServlet extends HttpServlet {
         HashMap newUser = mapper.readValue(req.getInputStream(), HashMap.class); //current understanding:: "inputstream will take in value passed to it and we can do LOGIC with it." Building...
         // At this point newUser could be sent to a service layer for validation which would then send it to
         // the DAO layer to be created in the DB
-        //String providedUsername = (String) newUser.get("user_name");
-        UsersService us = new UsersService();
-        User created = us.register(newUser); //I will have to change this of course. Can 'register' take a hashmap ?
+        String route = req.getRequestURI();
 
-        //set response payload to a JSON string
-        String respPayload = mapper.writeValueAsString(created);
-        resp.setStatus(201);
-        resp.setContentType("application/json");
-        resp.getWriter().write(respPayload);
+        if (route == "/users/register"){
+            UsersService us = new UsersService();
+            User created = us.register(newUser); //I will have to change this of course. Can 'register' take a hashmap ?
+
+            //set response payload to a JSON string
+            String respPayload = mapper.writeValueAsString(created);
+            resp.setStatus(201);
+            resp.setContentType("application/json");
+            resp.getWriter().write(respPayload);
+        } else if (route == "/users/login") {
+            //login
+        }
+
     }
 
     @Override

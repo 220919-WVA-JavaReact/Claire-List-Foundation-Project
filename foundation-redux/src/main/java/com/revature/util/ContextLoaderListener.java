@@ -28,9 +28,10 @@ import java.time.LocalDateTime;
             ServletRegistration.Dynamic registeredServlet = context.addServlet("UserServlet", userServlet);
             // Now I can affect the fields that I wanted to before
             registeredServlet.addMapping("/users");
+            registeredServlet.addMapping("/users/login"); //get a post here, send to us.login()
+            registeredServlet.addMapping("/users/register"); //be sure in userService to check the route ! There is a way to do this programmatically. Digging...
             registeredServlet.setLoadOnStartup(3);
-            registeredServlet.setInitParameter("user-servlet-key", "user-servlet-value");
-            registeredServlet.setInitParameter("another-param", "another-value");
+
 
 
             //future syntax, creating a servlet (1st line), then adding mapping to servlet, and adding that servlet to context
