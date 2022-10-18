@@ -1,5 +1,6 @@
 - [ ] CONNECT USERSERVLET TO CALL DATABASE ACTUAL
 - [ ] REFACTOR USERSERVICE TO TAKE A HASHMAP INSTEAD OF A USER OBJECT
+- --> NEW FLOW:: (flow f => pass hashmap to UserService, extract infos in UserService, do validation of infos,, pass infos to UserDAO ().end f) 
 - [ ] TEST CREATEUSER ROUTE !
 - [ ] LOGIN ROUTE
 - [ ] SERVICES NOW DOES VALIDATION ACTUAL OF REQUESTS

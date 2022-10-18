@@ -1,5 +1,6 @@
 package com.revature.services;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 import com.revature.models.User;
@@ -33,27 +34,22 @@ public class UsersService {
         }
 
     }
-    public User register(User usr){ //I take an object, and register that object in the database!
-        //be sure to deprecate console functionality!
-//        System.out.println("Please enter your FIRST NAME.");
-//        String first_name = io.nextLine();
-//
-//        System.out.println("Please enter your LAST NAME.");
-//        String last_name = io.nextLine();
-//
-//        System.out.println("Please enter your USERNAME. Must be UNIQUE!");
-//        String user_name = io.nextLine();
-//
-//        System.out.println("Please enter your EMAIL.");
-//        String email = io.nextLine();
-//
-//        System.out.println("Please enter a new PASSWORD.");
-//        String password = io.nextLine();
-//
-//        System.out.println("Please enter your ROLE. 1 for employee, 2 for management.");
-//        int role_num = Integer.parseInt(io.nextLine()); //Im in love
+    public User register(HashMap usr){
 
-        User user = ud.createUser(usr.getFirst_name(), usr.getLast_name(), usr.getUser_name(), usr.getPassword(), usr.getEmail(), usr.getRole_num());
+        //get values from above hashmap !
+
+        String reqFirstName = (String) usr.get("first_name");
+        String reqLastName = (String) usr.get("last_name");
+        String reqUsername = (String) usr.get("user_name");
+        String reqEmail = (String) usr.get("email");
+        String reqPassword = (String) usr.get("password");
+        int reqRolenum = (int) usr.get("role_num");
+
+        //check that username is unique HERE !
+        //need to get a record of ALL usernames, then if (DBuserName[i] == reqUsername){ error out; return; }
+            //else, do the below and return user.
+
+        User user = ud.createUser(reqFirstName, reqLastName, reqUsername, reqEmail, reqPassword, reqRolenum);
 
         return user;
     }
