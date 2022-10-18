@@ -50,7 +50,7 @@ public class UserDAO implements UserDAOint { //need to create a User INTERFACE, 
     }
 
     @Override
-    public User createUser(String first_name, String last_name, String user_name, String password, String email, int role_num){
+    public User createUser(String first_name, String last_name, String user_name, String email, String password, int role_num){
         User user = new User(); //new user object to INSERT into the database :-)
         try(Connection conn = ConnectionUtil.getConnection()){
             String sql = "INSERT INTO users (first_name, last_name, user_name, email, password, role_num) VALUES (?,?,?,?,?,?) RETURNING *";

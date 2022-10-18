@@ -27,17 +27,10 @@ public class ConnectionUtil{
             return null;
         }
 
-
-        String url;
-        String username;
-        String password;
-//        Properties prop = new Properties();
+        String url = System.getenv("url");
+        String username = System.getenv("username");
+        String password = System.getenv("password");
         try {
-//            prop.load(new FileReader("C:\\Users\\Claire\\Desktop\\revature-training\\Foundation-Actual\\foundation-redux\\src\\main\\resources\\application.properties"));
-//            url = prop.getProperty("url");
-//            username = prop.getProperty("username");
-//            password = prop.getProperty("password");
-
             conn = DriverManager.getConnection(url, username, password);
             System.out.println("GOT connection to the specified database!");
         } catch (SQLException e) {

@@ -36,7 +36,7 @@ import java.time.LocalDateTime;
 //        TestServlet exampleServlet = new TestServlet(); //...lets see
 //        context.addServlet("ExampleServlet", exampleServlet).addMapping("/examples");
        // UserServlet us = new UserServlet();
-       // context.addServlet("UserServlet", userServlet).addMapping("/users"); //this hsouldn't be necessary right?
+        context.addServlet("UserServlet", userServlet).addMapping("/users"); //this hsouldn't be necessary right?
 
         }
 

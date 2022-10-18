@@ -14,6 +14,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+
 public class UserServlet extends HttpServlet {
     // TODO what if the other servlets need an ObjectMapper? How do we share this reference across classes?
     private final ObjectMapper mapper;
@@ -52,11 +54,13 @@ public class UserServlet extends HttpServlet {
         // POST requests are generally used for the creation of data in an application
         System.out.println("[LOG] - UserServlet received a POST request at " + LocalDateTime.now());
 
-        User newUser = mapper.readValue(req.getInputStream(), User.class);
+        //create a hashmap to store the values
+        HashMap newUser = mapper.readValue(req.getInputStream(), HashMap.class); //current understanding:: "inputstream will take in value passed to it and we can do LOGIC with it." Building...
         // At this point newUser could be sent to a service layer for validation which would then send it to
         // the DAO layer to be created in the DB
+        String providedUsername = (String) newUser.get("user_name");
         UsersService us = new UsersService();
-        us.register(newUser);
+       // us.register(newUser); //I will have to change this of course. Can 'register' take a hashmap ?
 
         resp.setStatus(204);
 
