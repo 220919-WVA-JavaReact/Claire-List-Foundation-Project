@@ -60,11 +60,13 @@ public class UserServlet extends HttpServlet {
         // the DAO layer to be created in the DB
         //String providedUsername = (String) newUser.get("user_name");
         UsersService us = new UsersService();
-        us.register(newUser); //I will have to change this of course. Can 'register' take a hashmap ?
+        User created = us.register(newUser); //I will have to change this of course. Can 'register' take a hashmap ?
 
-        resp.setStatus(204);
-
-
+        //set response payload to a JSON string
+        String respPayload = mapper.writeValueAsString(created);
+        resp.setStatus(201);
+        resp.setContentType("application/json");
+        resp.getWriter().write(respPayload);
     }
 
     @Override
