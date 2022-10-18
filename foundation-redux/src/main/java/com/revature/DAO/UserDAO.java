@@ -13,9 +13,8 @@ public class UserDAO implements UserDAOint { //need to create a User INTERFACE, 
         //create user object we will get data back to
         User user = new User();
 
-        Connection conn = ConnectionUtil.getConnection(); //moved up. Digging...
         //connect with resources fed to us !
-        try { //if i move connection declaration out of this, will it work?
+        try (Connection conn = ConnectionUtil.getConnection()) { //if i move connection declaration out of this, will it work?
             String sql = "SELECT * FROM users WHERE user_name = ?";
 
             //PREPARE it, to prevent SQL injection attacks (scary...)

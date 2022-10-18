@@ -50,12 +50,12 @@ public class UsersService {
         //if return null, allow user creation below
         //else, reject
 
-        User user = ud.getByUsername(reqUsername); //curently failing. Digging...
-        if(user != null){ //'not null' is error. Oooooh Java...
-            System.out.println("USERNAME is taken!");
-            return null;
-        }
-        user = ud.createUser(reqFirstName, reqLastName, reqUsername, reqEmail, reqPassword, reqRolenum);
+//        User user = ud.getByUsername(reqUsername); //curently failing. Digging...
+//        if(user != null){ //'not null' is error. Oooooh Java...
+//            System.out.println("USERNAME is taken!");
+//            return null;
+//        }
+        User user = ud.createUser(reqFirstName, reqLastName, reqUsername, reqEmail, reqPassword, reqRolenum);
 
         return user;
     }
