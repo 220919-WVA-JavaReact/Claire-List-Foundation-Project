@@ -1,5 +1,8 @@
 package com.revature.util;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,7 +16,6 @@ public class ConnectionUtil{
 
     // I check if a connectioh exists an dif so, use it, or create a new connection!
     public static Connection getConnection(){
-        Dotenv dt = Dotenv.load();
         try{
             if (conn != null && !conn.isClosed()){
                 System.out.println("Use a previously made connection");
@@ -26,16 +28,24 @@ public class ConnectionUtil{
         }
 
 
-
+        String url = "";
+        String username = "";
+        String password = "";
+        Properties prop = new Properties();
         try {
-            String url = dt.get("url");
-            String username = dt.get("username");
-            String password = dt.get("password");
+            prop.load(new FileReader("C:\\Users\\Claire\\Desktop\\revature-training\\Foundation-Actual\\foundation-redux\\src\\main\\resources\\application.properties"));
+            url = prop.getProperty("url");
+            username = prop.getProperty("username");
+            password = prop.getProperty("password");
             conn = DriverManager.getConnection(url, username, password);
             System.out.println("GOT connection to the specified database!");
         } catch (SQLException e) {
             System.out.println("Failed connection to the database! :( Try again?");
             e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) { //jfor filereader, above
+            throw new RuntimeException(e);
         }
 
         return conn;
