@@ -38,7 +38,7 @@ public class UsersService {
 
         //get values from above hashmap !
 
-        String reqFirstName = (String) usr.get("first_name");
+        String reqFirstName = (String) usr.get("first_name"); //lets dig into why this is apparenly not assigning any values. Investigating...
         String reqLastName = (String) usr.get("last_name");
         String reqUsername = (String) usr.get("user_name");
         String reqEmail = (String) usr.get("email");
@@ -50,7 +50,7 @@ public class UsersService {
         //if return null, allow user creation below
         //else, reject
 
-        User user = ud.getByUsername(reqUsername);
+        User user = ud.getByUsername(reqUsername); //curently failing. Digging...
         if(user != null){ //'not null' is error. Oooooh Java...
             System.out.println("USERNAME is taken!");
             return null;
