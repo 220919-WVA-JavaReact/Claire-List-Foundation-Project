@@ -8,7 +8,6 @@ import com.revature.util.ConnectionUtil;
 import static java.util.Objects.nonNull;
 
 public class UserDAO implements UserDAOint { //need to create a User INTERFACE, then implement here!
-    //TODO:: CREATE GET ALL USERS METHOD SO WE CAN XOMPARE USERNAMES ON REGISTER, REJECT IF USERNAME IS NOT UNIQUE!
     @Override
     public User getByUsername(String user_name){
         //create user object we will get data back to

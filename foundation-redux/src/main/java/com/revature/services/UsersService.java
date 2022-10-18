@@ -46,10 +46,16 @@ public class UsersService {
         int reqRolenum = (int) usr.get("role_num");
 
         //check that username is unique HERE !
-        //need to get a record of ALL usernames, then if (DBuserName[i] == reqUsername){ error out; return; }
-            //else, do the below and return user.
+        //call getByUsername(), pass in reqUsername
+        //if return null, allow user creation below
+        //else, reject
 
-        User user = ud.createUser(reqFirstName, reqLastName, reqUsername, reqEmail, reqPassword, reqRolenum);
+        User user = ud.getByUsername(reqUsername);
+        if(user != null){ //'not null' is error. Oooooh Java...
+            System.out.println("USERNAME is taken!");
+            return null;
+        }
+        user = ud.createUser(reqFirstName, reqLastName, reqUsername, reqEmail, reqPassword, reqRolenum);
 
         return user;
     }
