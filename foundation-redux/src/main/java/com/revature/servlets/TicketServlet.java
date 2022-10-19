@@ -19,20 +19,22 @@ public class TicketServlet extends PatchServlet {
         System.out.println("[LOG] - TicketServlet Instantiated!");
     }
     @Override
-    protected void doGet (HttpServletRequest req, HttpServletResponse resp){
+    protected void doGet (HttpServletRequest req, HttpServletResponse res){
         //get methods::
         //get ALL tickets
         //get tickets by USER
         //get tickets by STATUS
     }
     @Override
-    protected void doPost (HttpServletRequest req, HttpServletResponse resp){
+    protected void doPost (HttpServletRequest req, HttpServletResponse res){
         //CREATE ticket
     }
 
 
     @Override
-    public void doPatch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+    public void doPatch(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        //DOCUMENTATION: https://technology.amis.nl/software-development/java/handle-http-patch-request-with-java-servlet/
+        //for how I did this. I do not want to have to update entire record, so I am hacking a bit here. Let's hope this works...
+        res.getWriter().write("I am proof that the patch request hack is at least communicating with servlet.");
     }
 }

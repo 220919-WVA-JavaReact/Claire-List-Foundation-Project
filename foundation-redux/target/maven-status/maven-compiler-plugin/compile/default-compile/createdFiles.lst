@@ -4,10 +4,12 @@ com\revature\DAO\TicketDAO.class
 com\revature\DAO\TicketDAOint.class
 com\revature\DAO\UserDAO.class
 com\revature\servlets\TestServlet.class
+com\revature\servlets\TicketServlet.class
 com\revature\servlets\UserServlet.class
 com\revature\util\ConnectionUtil.class
 com\revature\models\User.class
 com\revature\models\Ticket.class
 com\revature\services\UsersService.class
+com\revature\servlets\PatchServlet.class
 com\revature\util\ContextLoaderListener.class
 com\revature\App.class
