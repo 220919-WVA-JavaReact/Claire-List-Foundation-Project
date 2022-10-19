@@ -61,19 +61,25 @@ public class UserServlet extends HttpServlet {
         String route = req.getRequestURI();
 
         UsersService us; //declare here so UserSErvice is available in the below scope!
+        String error; //we will set different values to error, depending on fail state of below logic.
         us = new UsersService();
+
+        //refactor the below to be a switch statement with multiple cases.
         if (route == "/users/register") {
-
+            error = "That username is already in use! Please try again.";
             User created = us.register(newUser);
+            if (created == null){ //register checks value, and if there is a mtching record in the database, returns null.
+                resp.setStatus(403);
+                resp.setContentType("application/json");
+                resp.getWriter().write(error);
+            } else {
+                //set response payload to a JSON string
+                String respPayload = mapper.writeValueAsString(created);
+                resp.setStatus(201);
+                resp.setContentType("application/json");
+                resp.getWriter().write(respPayload);
+            }
 
-            //if the above is NOT null,
-            //go ahead and return the below. Else, set status to 403 (forbidden?),, and return a different payload.
-
-            //set response payload to a JSON string
-            String respPayload = mapper.writeValueAsString(created);
-            resp.setStatus(201);
-            resp.setContentType("application/json");
-            resp.getWriter().write(respPayload);
         } else if (route == "/users/login") {
             User loggedIn = us.login(newUser); //THIS should only have two values:: username and password. Changing...
         }
