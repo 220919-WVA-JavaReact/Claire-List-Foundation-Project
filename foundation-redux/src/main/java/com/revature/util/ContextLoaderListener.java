@@ -2,8 +2,10 @@ package com.revature.util;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.models.Ticket;
 import com.revature.models.User;
 import com.revature.servlets.TestServlet;
+import com.revature.servlets.TicketServlet;
 import com.revature.servlets.UserServlet;
 
 import javax.servlet.ServletContext;
@@ -29,10 +31,11 @@ import java.time.LocalDateTime;
             ServletRegistration.Dynamic registeredServlet = context.addServlet("UserServlet", userServlet);
             // Now I can affect the fields that I wanted to before
             registeredServlet.addMapping("/users");
-
             registeredServlet.setLoadOnStartup(3);
 
+            TicketServlet ticketServlet = new TicketServlet(mapper); 
 
+            context.addServlet("TicketServlet", ticketServlet).addMapping("/tickets");
 
             //future syntax, creating a servlet (1st line), then adding mapping to servlet, and adding that servlet to context
 //        TestServlet exampleServlet = new TestServlet(); //...lets see
