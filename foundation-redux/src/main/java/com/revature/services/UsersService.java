@@ -11,23 +11,20 @@ public class UsersService {
     UserDAO ud = new UserDAO(); //instanceOf the user DAO we created! :-)
     Scanner io = new Scanner(System.in); //"input/output" ie
 
-    public User login(){
-        System.out.println("Please enter your username");
-        String username = io.nextLine();
-        System.out.println("Please enter your password");
-        String password = io.nextLine();
+    public User login(HashMap usr){
+
+        //extract the username, password
+        String reqUsername = (String) usr.get("user_name"); //REMEMBER we must CAST using the (Type) notation, here. JAVA. BEHAVE!!!!
+        String reqPassword = (String) usr.get("password");
 
         // Call the database
-        User user = ud.getByUsername(username);
+        User user = ud.getByUsername(reqUsername);
 
         //password checking
-        if(user.getPassword().equals(password)){
-            System.out.println("Welcome, " + username);
-            System.out.println("type 't' to view ticket menu options, or 'l' to logout.");
-            //System.out.println(user);
+        if(user.getPassword().equals(reqPassword)){
 
-            user.setUser_name(username);
-            return user;
+            user.setUser_name(reqUsername);
+            return user; //instead, can we set some session infos?
         } else {
             System.out.println("Invalid Login");
             return null;
@@ -50,11 +47,11 @@ public class UsersService {
         //if return null, allow user creation below
         //else, reject
 
-//        User user = ud.getByUsername(reqUsername); //curently failing. Digging...
-//        if(user != null){ //'not null' is error. Oooooh Java...
-//            System.out.println("USERNAME is taken!");
-//            return null;
-//        }
+        User user = ud.getByUsername(reqUsername); //let's test this. Digging...
+        if(user != null){ //'not null' is error. Oooooh Java...
+            System.out.println("USERNAME is taken!");
+            return null;
+        }
         User user = ud.createUser(reqFirstName, reqLastName, reqUsername, reqEmail, reqPassword, reqRolenum);
 
         return user;

@@ -60,9 +60,14 @@ public class UserServlet extends HttpServlet {
         // the DAO layer to be created in the DB
         String route = req.getRequestURI();
 
-        if (route == "/users/register"){
-            UsersService us = new UsersService();
-            User created = us.register(newUser); //I will have to change this of course. Can 'register' take a hashmap ?
+        UsersService us; //declare here so UserSErvice is available in the below scope!
+
+        if (route == "/users/register") {
+            us = new UsersService();
+            User created = us.register(newUser);
+
+            //if the above is NOT null,
+            //go ahead and return the below. Else, set status to 403 (forbidden?),, and return a different payload.
 
             //set response payload to a JSON string
             String respPayload = mapper.writeValueAsString(created);
@@ -70,7 +75,7 @@ public class UserServlet extends HttpServlet {
             resp.setContentType("application/json");
             resp.getWriter().write(respPayload);
         } else if (route == "/users/login") {
-            //login
+            User loggedIn = us.login(newUser)); //THIS should only have two values:: username and password. Changing...
         }
 
     }
