@@ -11,7 +11,7 @@ public class UsersService {
     UserDAO ud = new UserDAO(); //instanceOf the user DAO we created! :-)
     Scanner io = new Scanner(System.in); //"input/output" ie
 
-    public User login(HashMap usrL){
+    public User login(HashMap usrL){ //UPDATE:: we need to return the user's role_num as well.
 
         //extract the username, password
         String reqUsername = (String) usrL.get("user_name"); //REMEMBER we must CAST using the (Type) notation, here. JAVA. BEHAVE!!!!
@@ -24,7 +24,7 @@ public class UsersService {
         if(userLogin.getPassword().equals(reqPassword)){
 
             userLogin.setUser_name(reqUsername);
-            return userLogin; //instead, can we set some session infos?
+            return userLogin; //this SHOULD have role_num (use int role = userLogin.getRoleNum(),, then DO something with taht role in users servlets~! Ie, set this to an attrebute, and then check that attreibute in the tickets servlet!
         } else {
             System.out.println("Invalid Login");
             return null;

@@ -99,6 +99,8 @@ public class UserServlet extends HttpServlet {
                     session.setAttribute("auth-user", loggedIn);
                     resp.setStatus(200);
                     resp.getWriter().write(mapper.writeValueAsString(loggedIn)); //lets hope this works. In tickets servlet, we will check for the "auth-user" attribute. Continuing...
+                    // be sure to set  HttpSession session = req.getSession(false); ,, otherwise it will create a new session, which we do not want :-)
+                    //something like:: Employee loggedInEmploy = (Employee) session.getAttribute("auth-user");
                 }
                 break;
         }
