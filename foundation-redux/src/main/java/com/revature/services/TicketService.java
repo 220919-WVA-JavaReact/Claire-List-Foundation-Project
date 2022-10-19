@@ -73,4 +73,10 @@ public class TicketService {
 
     }
 
+    public Ticket updateStatus(int id, String update){
+        return null;
+        //I call the ticket dao -- td.updateStatus() ie,
+        //then return the updated ticket
+    }
+
 }

@@ -112,4 +112,11 @@ public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS()
         }
         return tickets;
     }
+
+    public Ticket updateStatus(int id, String update){
+        //I take both a ticket id (int), and an update string which will update the record matching that id.
+
+        Ticket ticket = new Ticket();
+        return ticket;
+    }
 }
