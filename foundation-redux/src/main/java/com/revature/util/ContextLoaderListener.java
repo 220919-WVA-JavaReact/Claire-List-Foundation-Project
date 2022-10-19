@@ -33,7 +33,7 @@ import java.time.LocalDateTime;
             registeredServlet.addMapping("/users");
             registeredServlet.setLoadOnStartup(3);
 
-            TicketServlet ticketServlet = new TicketServlet(mapper); 
+            TicketServlet ticketServlet = new TicketServlet(mapper);
 
             context.addServlet("TicketServlet", ticketServlet).addMapping("/tickets");
 

@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class UserServlet extends HttpServlet {
-    // TODO what if the other servlets need an ObjectMapper? How do we share this reference across classes?
     private final ObjectMapper mapper;
 
     public UserServlet(ObjectMapper mapper){

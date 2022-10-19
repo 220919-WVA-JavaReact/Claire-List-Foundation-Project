@@ -1,10 +1,22 @@
 package com.revature.servlets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class TicketServlet extends HttpServlet {
+    private final ObjectMapper mapper;
+
+    public TicketServlet(ObjectMapper mapper){
+        this.mapper = mapper;
+    }
+    @Override
+    public void init() throws ServletException {
+        System.out.println("[LOG] - TicketServlet Instantiated!");
+    }
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp){
         //get methods::
