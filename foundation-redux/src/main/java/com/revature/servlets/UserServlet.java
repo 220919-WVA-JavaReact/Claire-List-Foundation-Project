@@ -96,11 +96,13 @@ public class UserServlet extends HttpServlet {
                     //create a session, which we will use for all authorization
                     HttpSession session = req.getSession(); //creates a sessoin ie, so we can do something with it
                     //do soemthing with this session. Configuring...
+                    session.setAttribute("auth-user", loggedIn);
+                    resp.setStatus(200);
+                    resp.getWriter().write(mapper.writeValueAsString(loggedIn)); //lets hope this works. In tickets servlet, we will check for the "auth-user" attribute. Continuing...
                 }
                 break;
         }
 
-        return null;
     }
 
     @Override
