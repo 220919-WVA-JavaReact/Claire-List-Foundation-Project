@@ -5,15 +5,11 @@ import com.revature.models.User; //CREATE ME!
 import com.revature.services.UsersService;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebInitParam;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
@@ -59,7 +55,7 @@ public class UserServlet extends HttpServlet {
         HashMap newUser = mapper.readValue(req.getInputStream(), HashMap.class); //current understanding:: "inputstream will take in value passed to it and we can do LOGIC with it." Building...
         // At this point newUser could be sent to a service layer for validation which would then send it to
         // the DAO layer to be created in the DB
-        String route = req.getRequestURI();
+        String route = req.getContextPath(); //req.getRequestURI(); deprecated. Testing...
 
         UsersService us; //declare here so UserSErvice is available in the below scope!
         String error; //we will set different values to error, depending on fail state of below logic.
