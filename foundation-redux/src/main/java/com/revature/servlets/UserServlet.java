@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -65,7 +66,9 @@ public class UserServlet extends HttpServlet {
         us = new UsersService();
 
         //refactor the below to be a switch statement with multiple cases.
-        if (route == "/users/register") {
+        //case "/users/register", etc etc
+        switch (route) {
+            case "/users/register":
             error = "That username is already in use! Please try again.";
             User created = us.register(newUser);
             if (created == null){ //register checks value, and if there is a mtching record in the database, returns null.
@@ -79,11 +82,25 @@ public class UserServlet extends HttpServlet {
                 resp.setContentType("application/json");
                 resp.getWriter().write(respPayload);
             }
+            break;
 
-        } else if (route == "/users/login") {
-            User loggedIn = us.login(newUser); //THIS should only have two values:: username and password. Changing...
+            case "users/login":
+                error = "Your credentials do not match the register, please try again.";
+                User loggedIn = us.login(newUser); //login returns null if the password and username do not match. So, if (null),
+
+                if (loggedIn == null){
+                    resp.setStatus(401); //UNAUTHORIZED
+                    resp.setContentType("application/json");
+                    resp.getWriter().write(error);
+                } else {
+                    //create a session, which we will use for all authorization
+                    HttpSession session = req.getSession(); //creates a sessoin ie, so we can do something with it
+                    //do soemthing with this session. Configuring...
+                }
+                break;
         }
 
+        return null;
     }
 
     @Override
