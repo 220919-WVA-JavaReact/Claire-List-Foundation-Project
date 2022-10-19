@@ -11,20 +11,20 @@ public class UsersService {
     UserDAO ud = new UserDAO(); //instanceOf the user DAO we created! :-)
     Scanner io = new Scanner(System.in); //"input/output" ie
 
-    public User login(HashMap usr){
+    public User login(HashMap usrL){
 
         //extract the username, password
-        String reqUsername = (String) usr.get("user_name"); //REMEMBER we must CAST using the (Type) notation, here. JAVA. BEHAVE!!!!
-        String reqPassword = (String) usr.get("password");
+        String reqUsername = (String) usrL.get("user_name"); //REMEMBER we must CAST using the (Type) notation, here. JAVA. BEHAVE!!!!
+        String reqPassword = (String) usrL.get("password");
 
         // Call the database
-        User user = ud.getByUsername(reqUsername);
+        User userLogin = ud.getByUsername(reqUsername);
 
         //password checking
-        if(user.getPassword().equals(reqPassword)){
+        if(userLogin.getPassword().equals(reqPassword)){
 
-            user.setUser_name(reqUsername);
-            return user; //instead, can we set some session infos?
+            userLogin.setUser_name(reqUsername);
+            return userLogin; //instead, can we set some session infos?
         } else {
             System.out.println("Invalid Login");
             return null;
@@ -52,7 +52,7 @@ public class UsersService {
             System.out.println("USERNAME is taken!");
             return null;
         }
-        User user = ud.createUser(reqFirstName, reqLastName, reqUsername, reqEmail, reqPassword, reqRolenum);
+         user = ud.createUser(reqFirstName, reqLastName, reqUsername, reqEmail, reqPassword, reqRolenum);
 
         return user;
     }

@@ -61,9 +61,9 @@ public class UserServlet extends HttpServlet {
         String route = req.getRequestURI();
 
         UsersService us; //declare here so UserSErvice is available in the below scope!
-
+        us = new UsersService();
         if (route == "/users/register") {
-            us = new UsersService();
+
             User created = us.register(newUser);
 
             //if the above is NOT null,
@@ -75,7 +75,7 @@ public class UserServlet extends HttpServlet {
             resp.setContentType("application/json");
             resp.getWriter().write(respPayload);
         } else if (route == "/users/login") {
-            User loggedIn = us.login(newUser)); //THIS should only have two values:: username and password. Changing...
+            User loggedIn = us.login(newUser); //THIS should only have two values:: username and password. Changing...
         }
 
     }
