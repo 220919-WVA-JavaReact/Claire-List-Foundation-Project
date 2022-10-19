@@ -65,7 +65,7 @@ public class UserServlet extends HttpServlet {
         //case "/users/register", etc etc
         switch (route) {
             case "register":
-            error = "That username is already in use! Please try again.";
+            error = "That username and/or email already exist in the register! Please try again."; //but you aren't ARE YOU JAVA????????
             User created = us.register(newUser);
             if (created == null){ //register checks value, and if there is a mtching record in the database, returns null.
                 resp.setStatus(403);
@@ -94,7 +94,7 @@ public class UserServlet extends HttpServlet {
                     //do soemthing with this session. Configuring...
                     session.setAttribute("auth-user", loggedIn);
                     resp.setStatus(200);
-                    resp.getWriter().write(mapper.writeValueAsString(loggedIn)); //lets hope this works. In tickets servlet, we will check for the "auth-user" attribute. Continuing...
+                    resp.getWriter().write(mapper.writeValueAsString("Welcome, " + loggedIn.getUser_name())); //lets hope this works. In tickets servlet, we will check for the "auth-user" attribute. Continuing...
                     // be sure to set  HttpSession session = req.getSession(false); ,, otherwise it will create a new session, which we do not want :-)
                     //something like:: Employee loggedInEmploy = (Employee) session.getAttribute("auth-user");
                 }

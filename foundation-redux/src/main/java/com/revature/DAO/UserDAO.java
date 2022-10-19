@@ -22,15 +22,15 @@ public class UserDAO implements UserDAOint { //need to create a User INTERFACE, 
 
             //EYE set the string to the values
             stmt.setString(1, user_name);
-            ResultSet rs;
+            ResultSet rs = stmt.executeQuery();
 
-            if ((rs = stmt.executeQuery()) != null){
+            while(rs.next()){
                 //results not blank? GREAT! we found the user...
-                rs.next();
+
 
                 // Now we can pull the information out and store it in the USER object
 
-                int id = rs.getInt("user_id");
+                int id = rs.getInt("user_id"); //tellintg me to call next? Refactor this to be in a while loop. Testing...
                 String first = rs.getString("first_name");
                 String last = rs.getString("last_name");
                 String recUserN = rs.getString("user_name");

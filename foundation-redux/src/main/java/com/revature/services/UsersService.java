@@ -31,7 +31,7 @@ public class UsersService {
         }
 
     }
-    public User register(HashMap usr){
+    public User register(HashMap usr){ //MAY HAVE TO CHAGNE THIS SO WE PRESERVE ORDER OF VARIABLES PASSED.
 
         //get values from above hashmap !
 
@@ -46,15 +46,26 @@ public class UsersService {
         //call getByUsername(), pass in reqUsername
         //if return null, allow user creation below
         //else, reject
-
-        User user = ud.getByUsername(reqUsername); //let's test this. Digging...
-        if(user != null){ //'not null' is error. Oooooh Java...
-            System.out.println("USERNAME is taken!");
-            return null;
+//              WE HAVE TO FIX THIS! If user is found,
+        //User user = ud.getByUsername(reqUsername); //let's test this. Digging...
+//        if(user != null){ //'not null' is error. Oooooh Java...
+//            System.out.println("USERNAME is taken!");
+//            return null;
+//        } else {
+//            user = ud.createUser(reqFirstName, reqLastName, reqUsername, reqEmail, reqPassword, reqRolenum);
+//            return user;
+//        }
+        User user;
+        user = ud.createUser(reqFirstName, reqLastName, reqUsername, reqEmail, reqPassword, reqRolenum);
+        //TODO: RETURN DIF ERROR IF USERNAME IS TAKEN, EMAIL IS TAKEN (both will error out)
+        Boolean emailTaken; //can I use this since i hvae to return an object? Let's find out!
+        String regError;
+        if(user.getUser_id() == 0){ //this happens if we pass a user with the same username. Investigaing that this throws correct erorr....
+            regError = "Username and Email MUST be unique";
+            return null; //set above regError here
+        } else {
+            return user;
         }
-         user = ud.createUser(reqFirstName, reqLastName, reqUsername, reqEmail, reqPassword, reqRolenum);
-
-        return user;
     }
 
     public int viewTix(User user){
