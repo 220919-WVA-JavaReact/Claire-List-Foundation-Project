@@ -55,7 +55,7 @@ public class UserServlet extends HttpServlet {
         HashMap newUser = mapper.readValue(req.getInputStream(), HashMap.class); //current understanding:: "inputstream will take in value passed to it and we can do LOGIC with it." Building...
         // At this point newUser could be sent to a service layer for validation which would then send it to
         // the DAO layer to be created in the DB
-        String route = req.getContextPath(); //req.getRequestURI(); deprecated. Testing...
+        String route = req.getHeader("type"); //req.getRequestURI(); deprecated. Testing... now, if type is 'login' or 'register'...
 
         UsersService us; //declare here so UserSErvice is available in the below scope!
         String error; //we will set different values to error, depending on fail state of below logic.
@@ -64,7 +64,7 @@ public class UserServlet extends HttpServlet {
         //refactor the below to be a switch statement with multiple cases.
         //case "/users/register", etc etc
         switch (route) {
-            case "/users/register":
+            case "register":
             error = "That username is already in use! Please try again.";
             User created = us.register(newUser);
             if (created == null){ //register checks value, and if there is a mtching record in the database, returns null.
@@ -80,7 +80,7 @@ public class UserServlet extends HttpServlet {
             }
             break;
 
-            case "users/login":
+            case "login":
                 error = "Your credentials do not match the register, please try again.";
                 User loggedIn = us.login(newUser); //login returns null if the password and username do not match. So, if (null),
 

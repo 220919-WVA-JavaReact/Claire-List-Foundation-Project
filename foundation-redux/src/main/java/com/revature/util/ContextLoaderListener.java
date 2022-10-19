@@ -28,9 +28,8 @@ import java.time.LocalDateTime;
             ServletContext context = sce.getServletContext();
             ServletRegistration.Dynamic registeredServlet = context.addServlet("UserServlet", userServlet);
             // Now I can affect the fields that I wanted to before
-            registeredServlet.addMapping("/users/*");
-            registeredServlet.addMapping("/users/login"); //get a post here, send to us.login()
-            registeredServlet.addMapping("/users/register"); //be sure in userService to check the route ! There is a way to do this programmatically. Digging...
+            registeredServlet.addMapping("/users");
+
             registeredServlet.setLoadOnStartup(3);
 
 
