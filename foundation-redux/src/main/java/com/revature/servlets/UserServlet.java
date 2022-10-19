@@ -23,13 +23,11 @@ public class UserServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         System.out.println("[LOG] - UserServlet Instantiated!");
-        System.out.println("[LOG] - Init param user-servlet-key: " + this.getServletConfig().getInitParameter("user-servlet-key"));
-        System.out.println("[LOG] - Init param test-init-key: " + this.getServletConfig().getInitParameter("test-init-key"));
-        System.out.println("[LOG] - Context param test-init-key: " + this.getServletContext().getInitParameter("test-context-key"));
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //TODO: CHANGE THE FUNCTIONALITY OF THIS GET TO GET USERS INSTEAD!
         System.out.println("[LOG] - UserServlet received a GET request at " + LocalDateTime.now());
         // When we did our POST request before we basically parsed a JSON string into a java object now to
         // do the reverse process

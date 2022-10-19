@@ -6,8 +6,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-public class TicketServlet extends HttpServlet {
+public class TicketServlet extends PatchServlet {
     private final ObjectMapper mapper;
 
     public TicketServlet(ObjectMapper mapper){
@@ -28,8 +29,10 @@ public class TicketServlet extends HttpServlet {
     protected void doPost (HttpServletRequest req, HttpServletResponse resp){
         //CREATE ticket
     }
+
+
     @Override
-    protected void doPatch (HttpServletRequest req, HttpServletResponse resp){
-        //UPDATE ticket STATUS here.
+    public void doPatch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
     }
 }
