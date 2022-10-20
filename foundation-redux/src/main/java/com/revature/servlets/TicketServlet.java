@@ -45,6 +45,7 @@ public class TicketServlet extends PatchServlet {
         String error; //we will set different values to error, depending on fail state of below logic.
         ts = new TicketService();
 
+        //TODO: MAKE THIS ONLY ACCESSIBLE TO MANAGERS
         switch(route){
             case "getstatus":
                 error = "Unrecognized status, please supply 'pending', 'approved', or 'denied' only. \n If you have supplied one of these, perhaps no matching records exist in the database.";
@@ -64,6 +65,7 @@ public class TicketServlet extends PatchServlet {
 
                 break;
             case "getuser":
+                //TODO: I AM AVABILABLE TO LOGGED IN USERS!
                 break;
         }
     }

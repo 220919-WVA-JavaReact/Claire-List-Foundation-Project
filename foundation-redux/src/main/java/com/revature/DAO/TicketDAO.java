@@ -12,8 +12,6 @@ public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS()
     @Override
     public Ticket createTicket(String reason, double amount, int created_by) {
         Ticket ticket = new Ticket();
-        //User user = new User();
-       // int created_by = 31; //change bt GET and SET ? //user.getUser_id()
 
         try (Connection conn = ConnectionUtil.getConnection()){
             String sql = "INSERT INTO tickets (created_by, reason, amount) VALUES (?,?,?) RETURNING *;"; //Let's see if we can't extract out the info...
@@ -23,19 +21,13 @@ public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS()
             stmt.setString(2, reason);
             stmt.setDouble(3, amount);
 
-           // stmt.executeQuery();
+            ResultSet rs;
 
-//            String select = "SELECT * FROM tickets WHERE created_by = ?;";
-//            PreparedStatement ps = conn.prepareStatement(select);
-//            ps.setInt(1, created_by);
-
-            ResultSet rs; //not returning query result BECAUSE we are not running a select against the database!
-
-            if ((rs = stmt.executeQuery()) != null){ //lets try this...
+            if ((rs = stmt.executeQuery()) != null){
                 rs.next();
 
                 int ticket_id = rs.getInt("ticket_id");
-                int createdBy = rs.getInt("created_by"); //I am causing HEADACHE. Investigating...
+                int createdBy = rs.getInt("created_by");
                 String rson = rs.getString("reason");
                 double amnt = rs.getDouble("amount");
                 String status = rs.getString("status");
@@ -115,8 +107,32 @@ public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS()
 
     public Ticket updateStatus(int id, String update){
         //I take both a ticket id (int), and an update string which will update the record matching that id.
+        //"UPDATE tickets SET status = ? WHERE ticket_id = ? RETURNING *;"
 
+        Connection conn = ConnectionUtil.getConnection();
         Ticket ticket = new Ticket();
+        try{
+            String sql = "UPDATE tickets SET status = ? WHERE ticket_id = ? RETURNING *;";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, update);
+            stmt.setInt(2,id);
+
+            ResultSet rs;
+            if ((rs = stmt.executeQuery()) != null){
+                rs.next();
+
+                int ticket_id = rs.getInt("ticket_id");
+                int createdBy = rs.getInt("created_by");
+                String rson = rs.getString("reason");
+                double amnt = rs.getDouble("amount");
+                String status = rs.getString("status");
+
+                ticket = new Ticket(ticket_id, createdBy, rson, amnt, status);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
         return ticket;
     }
 
