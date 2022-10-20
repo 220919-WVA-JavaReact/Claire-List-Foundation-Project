@@ -37,15 +37,13 @@ public class TicketService {
         return tix;
     }
     public Ticket updateStatus(int id, String update) {
-        //TODO: CALL GET TICKET BY ID HERE, AND IF STATUS IS _NOT_ PENDING, RETURN NULL.
         String checkStatus;
-        checkStatus = String.valueOf(td.getTicketById(id)); //TO BUILD!
+        checkStatus = td.getStatustById(id);
         Ticket updated = null;
-        if (!checkStatus.equals("pending")) { //BUILD ME !
+        if (!checkStatus.equals("pending")) {
             return null;
         } else {
             //check we have good data passed to our update string
-
             switch (update) {
                 case "denied":
                 case "approved":
@@ -55,18 +53,14 @@ public class TicketService {
                     }
                     break;
                 case "*":
-                    //      updated = null; //since I start as null, we don't have to do anything here, just break from this and return updated.
                     break;
             }
         }
-
-        return updated; //no it isn't always null java, you do not know what you are talking about.
-
+        return updated;
     }
-    public List<Ticket> view(String username){ //List<Ticket> view(User user
+    public List<Ticket> view(String username){
 
-
-        List<Ticket> allTix = td.getUserTickets(username); //I am creating PROBLEMS at runtime
+        List<Ticket> allTix = td.getUserTickets(username);
         if ( allTix.size() == 0 ){
             return null;
         } else {

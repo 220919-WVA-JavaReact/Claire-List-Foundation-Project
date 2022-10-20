@@ -166,7 +166,7 @@ public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS()
 
     }
 
-    public String getTicketById(int id){
+    public String getStatustById(int id){
         String ticket = "";
         //SELECT status FROM tickets WHERE ticket_id = ?;
 
