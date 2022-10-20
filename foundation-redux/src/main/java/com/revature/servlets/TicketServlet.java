@@ -111,8 +111,26 @@ public class TicketServlet extends PatchServlet {
     public void doPatch(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         //DOCUMENTATION: https://technology.amis.nl/software-development/java/handle-http-patch-request-with-java-servlet/
         //for how I did this. I do not want to have to update entire record, so I am hacking a bit here. Let's hope this works...
-        res.getWriter().write("I am proof that the patch request hack is at least communicating with servlet.");
 
-        //I take both a ticket id (int), and an update string which will update the record matching that id.
+        TicketService ts = new TicketService(); //TODO put me in field above these methods
+
+        //get the status and ticket id from client
+
+        HashMap newTicket = mapper.readValue(req.getInputStream(), HashMap.class);
+        int tickId = (int) newTicket.get("id");
+        String statUpdate = (String) newTicket.get("update");
+
+        String error;
+        Ticket updated = ts.updateStatus(tickId, statUpdate);
+
+        if (updated == null){
+            error = "Unable to update your ticket, please provide either 'approved' or 'denied'.";
+            res.setStatus(400);
+            res.getWriter().write(error);
+        } else {
+            String respPayload = mapper.writeValueAsString(updated);
+            res.setStatus(200);
+            res.getWriter().write(respPayload);
+        }
     }
 }

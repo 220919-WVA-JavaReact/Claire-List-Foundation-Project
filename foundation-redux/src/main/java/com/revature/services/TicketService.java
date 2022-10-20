@@ -7,14 +7,10 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
 
 public class TicketService {
     TicketDAO td = new TicketDAO();
 
-    Scanner io = new Scanner(System.in);
-    //I need:: "user_name" to feed to the below. Can i just do a
-    //if user.role_num == 2, get all tix. else, only user's own tickets.
     public Ticket create(HashMap newTicket){
 
 
@@ -33,38 +29,6 @@ public class TicketService {
         }
     }
 
-    public List<Ticket> view(){ //List<Ticket> view(User user
-        System.out.println("Here you can VIEW the tickets.");
-        System.out.println("Enter your USERNAME for verification.");
-        String user = io.nextLine();
-
-        List<Ticket> allTix = td.getUserTickets(user); //I am creating PROBLEMS at runtime
-//        System.out.println(allTix); //user is still NULL ??????????????
-//       // System.out.println("This USER's tickets: \n" + allTix);
-        return allTix; //in case we want to DO something with this...
-    }
-
-    public List<Ticket> viewAll(){
-
-        List<Ticket> all = td.getAllTickets();
-
-        System.out.println("Type your role level to continue.");
-        int roleCheck = Integer.parseInt(io.nextLine());
-
-        if(roleCheck == 1){
-            System.out.println("Invalid role, must be a manager to view ALL tickets.");
-            return null;
-        } else if (roleCheck == 2){
-            System.out.println("All users TICKETS: ");
-            System.out.println(all);
-            return all;
-        } else {
-            System.out.println("Unknown ROLE, please try again.");
-            return null;
-        }
-
-    }
-
     public List<Ticket> viewByStatus(String status){
         List<Ticket> tix = td.getTixByStatus(status);
         if (tix.size() == 0){
@@ -73,9 +37,53 @@ public class TicketService {
         return tix;
     }
     public Ticket updateStatus(int id, String update){
-        return null;
-        //I call the ticket dao -- td.updateStatus() ie,
-        //then return the updated ticket
+        Ticket updated = null;
+        //check we have good data passed to our update string
+
+        switch (update){
+            case "denied":
+            case "approved":
+                 updated = td.updateStatus(id, update);
+                 break;
+            case"*":
+          //      updated = null; //since I start as null, we don't have to do anything here, just break from this and return updated.
+                break;
+        }
+
+      return updated; //no it isn't always null java, you do not know what you are talking about.
+
     }
 
 }
+
+//    public List<Ticket> view(){ //List<Ticket> view(User user
+//        System.out.println("Here you can VIEW the tickets.");
+//        System.out.println("Enter your USERNAME for verification.");
+//        String user = io.nextLine();
+//
+//        List<Ticket> allTix = td.getUserTickets(user); //I am creating PROBLEMS at runtime
+////        System.out.println(allTix); //user is still NULL ??????????????
+////       // System.out.println("This USER's tickets: \n" + allTix);
+//        return allTix; //in case we want to DO something with this...
+//    }
+
+//    public List<Ticket> viewAll(){
+//
+//        List<Ticket> all = td.getAllTickets();
+//
+//        System.out.println("Type your role level to continue.");
+//        int roleCheck = Integer.parseInt(io.nextLine());
+//
+//        if(roleCheck == 1){
+//            System.out.println("Invalid role, must be a manager to view ALL tickets.");
+//            return null;
+//        } else if (roleCheck == 2){
+//            System.out.println("All users TICKETS: ");
+//            System.out.println(all);
+//            return all;
+//        } else {
+//            System.out.println("Unknown ROLE, please try again.");
+//            return null;
+//        }
+//
+//    }
