@@ -14,7 +14,6 @@ public abstract class PatchServlet extends HttpServlet {
             super.service(request, response);
         }
     }
-
     public abstract void doPatch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
 }

@@ -4,10 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Ticket;
 import com.revature.models.User;
 import com.revature.services.TicketService;
-import com.revature.services.UsersService;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -52,7 +50,6 @@ public class TicketServlet extends PatchServlet {
                     }
 
                     error = "Unrecognized status, please supply 'pending', 'approved', or 'denied' only. \n If you have supplied one of these, perhaps no matching records exist in the database.";
-                    //id String reqFirstName = (String) usr.get("first_name"); /
                     String query = (String) newReq.get("status");
                     List<Ticket> view = ts.viewByStatus(query);
 
@@ -63,14 +60,11 @@ public class TicketServlet extends PatchServlet {
                         res.setStatus(200);
                         res.setContentType("application/json");
                         String payload = mapper.writeValueAsString(view);
-                        res.getWriter().write(payload); //Redeploy! I have implemented mapper, above. Testing...
+                        res.getWriter().write(payload);
                     }
                     break;
 
                 case "getuser":
-                    //TODO: I AM AVABILABLE TO LOGGED IN USERS!
-                   // HashMap requsername = mapper.readValue(req.getInputStream(), HashMap.class); -- DO NOT CALL THIS AGAIN, it is KISSING UP the input stream
-                   // String username = (String) requsername.get("user_name");
                     error = "Unable to find that user's tickets, please try again.";
                     String authUser = auth.getUser_name();
 
@@ -97,7 +91,6 @@ public class TicketServlet extends PatchServlet {
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse res) throws IOException {
         //CREATE ticket
-        //TODO: maybe deprecated the below if-else if-else tree, it's a bit messy.
           HttpSession session = req.getSession(false); //do NOT create a new session, check auth if exists
         if (session != null){
             User auth = (User) session.getAttribute("auth-user");
@@ -132,8 +125,6 @@ public class TicketServlet extends PatchServlet {
     public void doPatch(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         //DOCUMENTATION: https://technology.amis.nl/software-development/java/handle-http-patch-request-with-java-servlet/
         //for how I did this. I do not want to have to update entire record, so I am hacking a bit here. Let's hope this works...
-
-        //TODO: REFACTOR SO WE ARE GETTING FROM BODY OF REQUEST, NOT HEADER.
 
         TicketService ts = new TicketService();
 
@@ -172,4 +163,3 @@ public class TicketServlet extends PatchServlet {
         }
     }
 }
-

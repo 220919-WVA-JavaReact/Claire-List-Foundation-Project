@@ -31,51 +31,24 @@ public class UsersService {
         }
 
     }
-    public User register(HashMap usr){ //MAY HAVE TO CHAGNE THIS SO WE PRESERVE ORDER OF VARIABLES PASSED.
+    public User register(HashMap usr){
 
         //get values from above hashmap !
 
-        String reqFirstName = (String) usr.get("first_name"); //lets dig into why this is apparenly not assigning any values. Investigating...
+        String reqFirstName = (String) usr.get("first_name");
         String reqLastName = (String) usr.get("last_name");
         String reqUsername = (String) usr.get("user_name");
         String reqEmail = (String) usr.get("email");
         String reqPassword = (String) usr.get("password");
         int reqRolenum = (int) usr.get("role_num");
 
-        //check that username is unique HERE !
-        //call getByUsername(), pass in reqUsername
-        //if return null, allow user creation below
-        //else, reject
-//              WE HAVE TO FIX THIS! If user is found,
-        //User user = ud.getByUsername(reqUsername); //let's test this. Digging...
-//        if(user != null){ //'not null' is error. Oooooh Java...
-//            System.out.println("USERNAME is taken!");
-//            return null;
-//        } else {
-//            user = ud.createUser(reqFirstName, reqLastName, reqUsername, reqEmail, reqPassword, reqRolenum);
-//            return user;
-//        }
         User user;
         user = ud.createUser(reqFirstName, reqLastName, reqUsername, reqEmail, reqPassword, reqRolenum);
-        //TODO: RETURN DIF ERROR IF USERNAME IS TAKEN, EMAIL IS TAKEN (both will error out)
-        Boolean emailTaken; //can I use this since i hvae to return an object? Let's find out!
-        String regError;
-        if(user.getUser_id() == 0){ //this happens if we pass a user with the same username. Investigaing that this throws correct erorr....
-            regError = "Username and Email MUST be unique";
-            return null; //set above regError here
+
+        if(user.getUser_id() == 0){
+            return null;
         } else {
             return user;
         }
-    }
-
-    public int viewTix(User user){
-        //I control whether user can see all tickets (role_num == 2) or only their own (rn == 1) !
-        int check = user.getRole_num();
-        if (check == 1){
-            return 1; //'if this method call == 1, display own tickets
-        } else if (check == 2){
-            return 2;
-        }
-        return 0;
     }
 }

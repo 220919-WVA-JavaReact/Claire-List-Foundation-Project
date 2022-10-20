@@ -8,13 +8,13 @@ import java.util.List;
 //also feed this user's user_name to getAllTickets() (--> manager's thing) !
 
 import com.revature.models.Ticket;
-public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS(), GETTICKETSBYSTATUS(DENIED, APPROVED)
+public class TicketDAO implements TicketDAOint {
     @Override
     public Ticket createTicket(String reason, double amount, int created_by) {
         Ticket ticket = new Ticket();
 
         try (Connection conn = ConnectionUtil.getConnection()){
-            String sql = "INSERT INTO tickets (created_by, reason, amount) VALUES (?,?,?) RETURNING *;"; //Let's see if we can't extract out the info...
+            String sql = "INSERT INTO tickets (created_by, reason, amount) VALUES (?,?,?) RETURNING *;";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             stmt.setInt(1, created_by);
@@ -72,7 +72,7 @@ public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS()
         } catch (SQLException e){
             e.printStackTrace();
         }
-        return tickets; //needed to use WHILE loop so that tickets.add() actually WORKED!
+        return tickets;
     }
 
 
@@ -86,7 +86,7 @@ public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS()
             String usSQL = "SELECT users.user_name, tickets.ticket_id, tickets.reason, tickets.amount, tickets.status FROM tickets LEFT JOIN users ON users.user_id = tickets.created_by;";
             PreparedStatement stmt = conn.prepareStatement(usSQL);
 
-            ResultSet rs = stmt.executeQuery(); //
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 int ticket_id = rs.getInt("ticket_id");
@@ -106,8 +106,6 @@ public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS()
     }
 
     public Ticket updateStatus(int id, String update){
-        //I take both a ticket id (int), and an update string which will update the record matching that id.
-        //"UPDATE tickets SET status = ? WHERE ticket_id = ? RETURNING *;"
 
         Connection conn = ConnectionUtil.getConnection();
         Ticket ticket = new Ticket();
@@ -138,7 +136,7 @@ public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS()
 
     @Override
     public List<Ticket> getTixByStatus(String status){
-        //SELECT users.user_name, tickets.ticket_id, tickets.reason, tickets.amount, tickets.status FROM tickets LEFT JOIN users ON users.user_id = tickets.created_by WHERE tickets.status = ?;
+
         Connection conn = ConnectionUtil.getConnection();
         List<Ticket> tickets = new ArrayList<>();
         try{
@@ -168,7 +166,6 @@ public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS()
 
     public String getStatustById(int id){
         String ticket = "";
-        //SELECT status FROM tickets WHERE ticket_id = ?;
 
         Connection conn = ConnectionUtil.getConnection();
 
@@ -190,5 +187,4 @@ public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS()
         }
         return ticket;
     }
-
 }

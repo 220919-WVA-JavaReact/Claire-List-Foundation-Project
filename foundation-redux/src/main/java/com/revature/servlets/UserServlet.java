@@ -1,7 +1,7 @@
 package com.revature.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revature.models.User; //CREATE ME!
+import com.revature.models.User;
 import com.revature.services.UsersService;
 
 import javax.servlet.ServletException;
@@ -26,8 +26,7 @@ public class UserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //TODO: CHANGE THE FUNCTIONALITY OF THIS GET TO GET USERS INSTEAD!
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException { //CURRENTLY, NOT SUPPORTED.
         System.out.println("[LOG] - UserServlet received a GET request at " + LocalDateTime.now());
         // When we did our POST request before we basically parsed a JSON string into a java object now to
         // do the reverse process
@@ -45,31 +44,27 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // POST requests are generally used for the creation of data in an application
+        // CREATE A USER ON 'REGISTER', LOG IN A USER ON 'LOGIN'
         System.out.println("[LOG] - UserServlet received a POST request at " + LocalDateTime.now());
 
         //create a hashmap to store the values
-        HashMap newUser = mapper.readValue(req.getInputStream(), HashMap.class); //current understanding:: "inputstream will take in value passed to it and we can do LOGIC with it." Building...
-        // At this point newUser could be sent to a service layer for validation which would then send it to
-        // the DAO layer to be created in the DB
-        String route = req.getHeader("route"); //req.getRequestURI(); deprecated. Testing... now, if type is 'login' or 'register'...
+        HashMap newUser = mapper.readValue(req.getInputStream(), HashMap.class);
+        String route = req.getHeader("route"); // this is the magic line ! :-)
 
-        UsersService us; //declare here so UserSErvice is available in the below scope!
-        String error; //we will set different values to error, depending on fail state of below logic.
+        UsersService us;
+        String error;
         us = new UsersService();
 
-        //refactor the below to be a switch statement with multiple cases.
-        //case "/users/register", etc etc
         switch (route) {
             case "register":
-            error = "That username and/or email already exists in the register! Please try again."; //but you aren't ARE YOU JAVA????????
+            error = "That username and/or email already exists in the register! Please try again.";
             User created = us.register(newUser);
             if (created == null){ //register checks value, and if there is a mtching record in the database, returns null.
                 resp.setStatus(403);
                 resp.setContentType("application/json");
                 resp.getWriter().write(error);
             } else {
-                //set response payload to a JSON string
+                //remember to se content type!
                 String respPayload = mapper.writeValueAsString(created);
                 resp.setStatus(201);
                 resp.setContentType("application/json");
@@ -88,7 +83,6 @@ public class UserServlet extends HttpServlet {
                 } else {
                     //create a session, which we will use for all authorization
                     HttpSession session = req.getSession(); //creates a sessoin ie, so we can do something with it
-                    //do soemthing with this session. Configuring...
                     session.setAttribute("auth-user", loggedIn);
                     resp.setStatus(200);
                     resp.getWriter().write(mapper.writeValueAsString("Welcome, " + loggedIn.getUser_name()));
@@ -105,6 +99,7 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //Send a DELETE request to /users in order to log OUT.
         HttpSession session = req.getSession(false);
         if (session != null) {
             session.invalidate();

@@ -15,8 +15,9 @@ public class TicketService {
 
 
         String reason = (String) newTicket.get("reason");
-        double amount = (double) newTicket.get("amount"); //might have to change to FLOAT again. Why did I not like floats...? (it broke at some point and I don't remember why
-       // int createdBy = (int) newTicket.get("user_id"); //DEPRECATED -- user id SHOULD now automatically come from servlet !
+        double amount = (double) newTicket.get("amount");
+        //might have to change to FLOAT again. Why did I not like floats...? (it broke at some point and I don't remember why
+
 
         DecimalFormat df = new DecimalFormat("##.##");
         df.setRoundingMode(RoundingMode.DOWN);
@@ -69,26 +70,3 @@ public class TicketService {
     }
 
 }
-
-
-
-//    public List<Ticket> viewAll(){
-//
-//        List<Ticket> all = td.getAllTickets();
-//
-//        System.out.println("Type your role level to continue.");
-//        int roleCheck = Integer.parseInt(io.nextLine());
-//
-//        if(roleCheck == 1){
-//            System.out.println("Invalid role, must be a manager to view ALL tickets.");
-//            return null;
-//        } else if (roleCheck == 2){
-//            System.out.println("All users TICKETS: ");
-//            System.out.println(all);
-//            return all;
-//        } else {
-//            System.out.println("Unknown ROLE, please try again.");
-//            return null;
-//        }
-//
-//    }
