@@ -51,7 +51,10 @@ public class TicketServlet extends PatchServlet {
                 List<Ticket> view = ts.viewByStatus(query);
                 res.setStatus(200);
                 res.setContentType("application/json");
-                res.getWriter().write(view.toString());
+                String payload = mapper.writeValueAsString(view);
+                res.getWriter().write(payload); //Redeploy! I have implemented mapper, above. Testing...
+                break;
+            case "getuser":
                 break;
         }
     }
