@@ -28,83 +28,86 @@ public class TicketServlet extends PatchServlet {
     }
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse res) throws IOException {
-        //get methods::
-        //get ALL tickets --> header "route": "getall" (AND auth, spec'd below
-        //// -> check if role_num = 2 in AUTHORIZATION HEADER, if not, disallow
 
-        //get tickets by USER --> header "type": "getuser" (BODY MUST HAVE USERNAME, below)
-        //// -> pass a USERNAME in HEADER
+        HashMap newReq = mapper.readValue(req.getInputStream(), HashMap.class); //USE mne to get from body of request.
 
-        //get tickets by STATUS --> header "type": "getstatus" (AND AUTH, same as above^)
-        //// -> pass a string in HEADER, run query
+        HttpSession session = req.getSession(false); //do NOT create a new session, check auth if exists
+        if (session != null) {
+            User auth = (User) session.getAttribute("auth-user");
 
+            String route = req.getHeader("route");
 
-        String route = req.getHeader("route");
+            TicketService ts;
+            String error;
+            ts = new TicketService();
 
-        TicketService ts; //declare here so UserSErvice is available in the below scope!
-        String error; //we will set different values to error, depending on fail state of below logic.
-        ts = new TicketService();
+            //TODO: MAKE THIS ONLY ACCESSIBLE TO MANAGERS
+            switch (route) {
+                case "getstatus":
 
-        //TODO: MAKE THIS ONLY ACCESSIBLE TO MANAGERS
-        switch(route){
-            case "getstatus":
-                error = "Unrecognized status, please supply 'pending', 'approved', or 'denied' only. \n If you have supplied one of these, perhaps no matching records exist in the database.";
-                String query = req.getHeader("status");
-                List<Ticket> view = ts.viewByStatus(query);
+                    if (auth.getRole_num() != 2){
+                        res.setStatus(403); //forbidden?
+                        res.getWriter().write("You do not have permission to view this page!");
+                        break;
+                    }
 
-                if (view == null){
-                    res.setStatus(422); //unprocessable entity
-                    res.getWriter().write(error);
-                } else {
-                    res.setStatus(200);
-                    res.setContentType("application/json");
-                    String payload = mapper.writeValueAsString(view);
-                    res.getWriter().write(payload); //Redeploy! I have implemented mapper, above. Testing...
-                }
-                break;
+                    error = "Unrecognized status, please supply 'pending', 'approved', or 'denied' only. \n If you have supplied one of these, perhaps no matching records exist in the database.";
+                    //id String reqFirstName = (String) usr.get("first_name"); /
+                    String query = (String) newReq.get("status");
+                    List<Ticket> view = ts.viewByStatus(query);
 
-            case "getuser":
-                //TODO: I AM AVABILABLE TO LOGGED IN USERS!
-                HashMap requsername = mapper.readValue(req.getInputStream(), HashMap.class);
-                String username = (String) requsername.get("user_name");
-                error = "Unable to find that user's tickets, please try again.";
+                    if (view == null) {
+                        res.setStatus(422); //unprocessable entity
+                        res.getWriter().write(error);
+                    } else {
+                        res.setStatus(200);
+                        res.setContentType("application/json");
+                        String payload = mapper.writeValueAsString(view);
+                        res.getWriter().write(payload); //Redeploy! I have implemented mapper, above. Testing...
+                    }
+                    break;
 
-                List<Ticket> userTix = ts.view(username);
+                case "getuser":
+                    //TODO: I AM AVABILABLE TO LOGGED IN USERS!
+                   // HashMap requsername = mapper.readValue(req.getInputStream(), HashMap.class); -- DO NOT CALL THIS AGAIN, it is KISSING UP the input stream
+                   // String username = (String) requsername.get("user_name");
+                    error = "Unable to find that user's tickets, please try again.";
+                    String authUser = auth.getUser_name();
 
-                if(userTix == null){
-                    res.setStatus(422);
-                    res.getWriter().write(error);
+                        List<Ticket> userTix = ts.view(authUser);
 
-                } else {
-                    res.setStatus(200);
-                    String payload = mapper.writeValueAsString(userTix);
-                    res.getWriter().write(payload);
-                }
-                break;
+                        if (userTix == null) {
+                            res.setStatus(422);
+                            res.getWriter().write(error);
+
+                        } else {
+                            res.setStatus(200);
+                            String payload = mapper.writeValueAsString(userTix);
+                            res.getWriter().write(payload);
+                        }
+
+                    break;
+            }
+        } else {
+            String authError = "You do not have access to view this page.";
+            res.setStatus(401);
+            res.getWriter().write(authError);
         }
     }
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse res) throws IOException {
         //CREATE ticket
         //TODO: maybe deprecated the below if-else if-else tree, it's a bit messy.
-        HttpSession session = req.getSession(false); //do NOT create a new session, check auth if exists
-        User auth = (User) session.getAttribute("auth-user"); //let's see if this is working.
-        String authError;
-        if (auth == null){ //'you are not logged in ie"
-            authError = "You must log in to create a ticket.";
-            res.setStatus(401);
-            res.setContentType("application/json");
-            res.getWriter().write(authError);
-        } else {
-           // User loggedIn = (User) session.getAttribute("auth-user");
-            System.out.println("[LOG] - TicketServlet received a POST request at " + LocalDateTime.now());
-            HashMap newTicket = mapper.readValue(req.getInputStream(), HashMap.class); //I NEED: USER_ID, REASON, AMOUNT from client!
+          HttpSession session = req.getSession(false); //do NOT create a new session, check auth if exists
+        if (session != null){
+            User auth = (User) session.getAttribute("auth-user");
 
+            System.out.println("[LOG] - TicketServlet received a POST request at " + LocalDateTime.now());
+
+            HashMap newTicket = mapper.readValue(req.getInputStream(), HashMap.class);
             TicketService ts = new TicketService();
             String error;
-            Ticket created = ts.create(newTicket);
-            //TODO: MAKE THIS ACCESSIBLE ONLY TO LOGGED IN USERS!
-            //must have a session ie
+            Ticket created = ts.create(newTicket, auth.getUser_id());
 
             if (created == null){
                 error = "Unable to create your ticket, please try again. \n Be sure to enter a decimal amount, even for whole numbers (24.00 ie).";
@@ -117,6 +120,10 @@ public class TicketServlet extends PatchServlet {
                 res.setStatus(201);
                 res.getWriter().write(respPayload);
             }
+        } else {
+            String authError = "You do not have access to view this page.";
+            res.setStatus(401);
+            res.getWriter().write(authError);
         }
     }
 
@@ -126,25 +133,43 @@ public class TicketServlet extends PatchServlet {
         //DOCUMENTATION: https://technology.amis.nl/software-development/java/handle-http-patch-request-with-java-servlet/
         //for how I did this. I do not want to have to update entire record, so I am hacking a bit here. Let's hope this works...
 
-        TicketService ts = new TicketService(); //TODO put me in field above these methods
+        //TODO: REFACTOR SO WE ARE GETTING FROM BODY OF REQUEST, NOT HEADER.
 
-        //get the status and ticket id from client
+        TicketService ts = new TicketService();
 
-        HashMap newTicket = mapper.readValue(req.getInputStream(), HashMap.class);
-        int tickId = (int) newTicket.get("id");
-        String statUpdate = (String) newTicket.get("update");
+        HttpSession session = req.getSession(false);
+        if (session != null) {
+            User auth = (User) session.getAttribute("auth-user");
 
-        String error;
-        Ticket updated = ts.updateStatus(tickId, statUpdate);
+            if (auth.getRole_num() == 2) {
 
-        if (updated == null){
-            error = "Unable to update your ticket, please provide an existing ticket ID, and \n either 'approved' or 'denied'. \n Note that you cannot currently change a ticket after it has been processed.";
-            res.setStatus(400);
-            res.getWriter().write(error);
+
+                HashMap newTicket = mapper.readValue(req.getInputStream(), HashMap.class);
+                int tickId = (int) newTicket.get("id");
+                String statUpdate = (String) newTicket.get("update");
+
+                String error;
+                Ticket updated = ts.updateStatus(tickId, statUpdate);
+
+                if (updated == null) {
+                    error = "Unable to update your ticket, please provide an existing ticket ID, and \n either 'approved' or 'denied'. \n Note that you cannot currently change a ticket after it has been processed.";
+                    res.setStatus(400);
+                    res.getWriter().write(error);
+                } else {
+                    String respPayload = mapper.writeValueAsString(updated);
+                    res.setStatus(200);
+                    res.getWriter().write(respPayload);
+                }
+            } else {
+                String authError = "You do not have access to approve or deny tickets.";
+                res.setStatus(403);
+                res.getWriter().write(authError);
+            }
         } else {
-            String respPayload = mapper.writeValueAsString(updated);
-            res.setStatus(200);
-            res.getWriter().write(respPayload);
+            String authError = "You do not have access to view this page.";
+            res.setStatus(401);
+            res.getWriter().write(authError);
         }
     }
 }
+

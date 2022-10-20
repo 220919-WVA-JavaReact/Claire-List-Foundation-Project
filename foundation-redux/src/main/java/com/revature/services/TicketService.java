@@ -11,17 +11,17 @@ import java.util.List;
 public class TicketService {
     TicketDAO td = new TicketDAO();
 
-    public Ticket create(HashMap newTicket){
+    public Ticket create(HashMap newTicket, int user_id){
 
 
         String reason = (String) newTicket.get("reason");
         double amount = (double) newTicket.get("amount"); //might have to change to FLOAT again. Why did I not like floats...? (it broke at some point and I don't remember why
-        int createdBy = (int) newTicket.get("user_id");
+       // int createdBy = (int) newTicket.get("user_id"); //DEPRECATED -- user id SHOULD now automatically come from servlet !
 
         DecimalFormat df = new DecimalFormat("##.##");
         df.setRoundingMode(RoundingMode.DOWN);
 
-        Ticket tix = td.createTicket(reason, Double.parseDouble(df.format(amount)), createdBy); //jesus CHRIST JAVA D:<
+        Ticket tix = td.createTicket(reason, Double.parseDouble(df.format(amount)), user_id); //jesus CHRIST JAVA D:<
         if (tix.getCreated_by() == 0){
             return null;
         } else {

@@ -91,9 +91,7 @@ public class UserServlet extends HttpServlet {
                     //do soemthing with this session. Configuring...
                     session.setAttribute("auth-user", loggedIn);
                     resp.setStatus(200);
-                    resp.getWriter().write(mapper.writeValueAsString("Welcome, " + loggedIn.getUser_name())); //lets hope this works. In tickets servlet, we will check for the "auth-user" attribute. Continuing...
-                    // be sure to set  HttpSession session = req.getSession(false); ,, otherwise it will create a new session, which we do not want :-)
-                    //something like:: Employee loggedInEmploy = (Employee) session.getAttribute("auth-user");
+                    resp.getWriter().write(mapper.writeValueAsString("Welcome, " + loggedIn.getUser_name()));
                 }
                 break;
         }
@@ -107,6 +105,11 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
+        HttpSession session = req.getSession(false);
+        if (session != null) {
+            session.invalidate();
+            resp.getWriter().write("You have been logged out successfully.");
+            resp.setStatus(200);
+        }
     }
 }
