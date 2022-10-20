@@ -37,7 +37,8 @@ public class TicketServlet extends PatchServlet {
 
         TicketService ts = new TicketService();
         String error;
-        Ticket created = ts.create(newTicket);
+        Ticket created = ts.create(newTicket); //WHAT IF instead, we returned a getTicketById, which returned the user's ticket, as in that long ass SQL we wrote?
+                                              //TODO tomorrow. Today, we will get MVP.
 
         if (created == null){
             error = "Unable to create your ticket, please try again.";

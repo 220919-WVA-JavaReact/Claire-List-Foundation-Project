@@ -16,7 +16,7 @@ public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS()
        // int created_by = 31; //change bt GET and SET ? //user.getUser_id()
 
         try (Connection conn = ConnectionUtil.getConnection()){
-            String sql = "INSERT INTO tickets (created_by, reason, amount) VALUES (?,?,?) RETURNING *;"; //I FOROT THE RETURNING IS NEEDED !!!!!~!!!!!!!!!!!!!!!!!!!!!!
+            String sql = "INSERT INTO tickets (created_by, reason, amount) VALUES (?,?,?) RETURNING *;"; //Let's see if we can't extract out the info...
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             stmt.setInt(1, created_by);
