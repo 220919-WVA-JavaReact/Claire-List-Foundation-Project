@@ -25,9 +25,14 @@ public class TicketServlet extends PatchServlet {
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse res){
         //get methods::
-        //get ALL tickets
-        //get tickets by USER
-        //get tickets by STATUS
+        //get ALL tickets --> header "type": "getall" (AND auth, spec'd below
+        //// -> check if role_num = 2 in AUTHORIZATION HEADER, if not, disallow
+
+        //get tickets by USER --> header "type": "getuser" (BODY MUST HAVE USERNAME, below)
+        //// -> pass a USERNAME in HEADER
+
+        //get tickets by STATUS --> header "type": "getstatus" (AND AUTH, same as above^)
+        //// -> pass a string in HEADER, run query
     }
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse res) throws IOException {
