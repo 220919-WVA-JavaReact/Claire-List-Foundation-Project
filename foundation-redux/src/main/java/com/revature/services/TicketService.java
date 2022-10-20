@@ -16,9 +16,17 @@ public class TicketService {
     //I need:: "user_name" to feed to the below. Can i just do a
     //if user.role_num == 2, get all tix. else, only user's own tickets.
     public Ticket create(HashMap newTicket){
+//        Double amntD;
+//        if (Math.round((Float) newTicket.get("amount")) == (Float) newTicket.get("amount")){ //if these are equal, it means we were passed a whole number value.
+//            int amount = (int) newTicket.get("amount");
+//             amntD = Double.valueOf(amount);
+//        } else {
+//            amntD = (Double) newTicket.get("amount");
+//        }
+
 
         String reason = (String) newTicket.get("reason");
-        double amount = (double) newTicket.get("amount");
+        Double amount = (double) newTicket.get("amount");
         int createdBy = (int) newTicket.get("user_id");
 
         DecimalFormat df = new DecimalFormat("##.##");
