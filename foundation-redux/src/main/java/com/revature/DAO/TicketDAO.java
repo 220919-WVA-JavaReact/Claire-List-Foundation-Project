@@ -10,7 +10,7 @@ import java.util.List;
 import com.revature.models.Ticket;
 public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS(), GETTICKETSBYSTATUS(DENIED, APPROVED)
     @Override
-    public Ticket createTicket(String reason, float amount, int created_by) {
+    public Ticket createTicket(String reason, double amount, int created_by) {
         Ticket ticket = new Ticket();
         //User user = new User();
        // int created_by = 31; //change bt GET and SET ? //user.getUser_id()
@@ -21,7 +21,7 @@ public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS()
 
             stmt.setInt(1, created_by);
             stmt.setString(2, reason);
-            stmt.setFloat(3, amount);
+            stmt.setDouble(3, amount);
 
            // stmt.executeQuery();
 
@@ -37,7 +37,7 @@ public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS()
                 int ticket_id = rs.getInt("ticket_id");
                 int createdBy = rs.getInt("created_by"); //I am causing HEADACHE. Investigating...
                 String rson = rs.getString("reason");
-                float amnt = rs.getFloat("amount");
+                double amnt = rs.getDouble("amount");
                 String status = rs.getString("status");
 
                ticket = new Ticket(ticket_id, createdBy, rson, amnt, status);

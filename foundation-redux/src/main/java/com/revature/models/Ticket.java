@@ -5,12 +5,12 @@ public class Ticket {
     private int ticket_id;
     private int created_by; //int, relates to user_id (must write a custom request for this!)
     private String reason;
-    private float amount;
+    private double amount;
     private String status;
 
     private String user;
 
-    public Ticket(int ticket_id, int created_by, String reason, float amount, String status) { //I am used to CREATE a ticket
+    public Ticket(int ticket_id, int created_by, String reason, double amount, String status) { //I am used to CREATE a ticket
         this.ticket_id = ticket_id;
         this.created_by = created_by;
         this.reason = reason;
@@ -22,7 +22,7 @@ public class Ticket {
     }
 
 
-    public Ticket(int ticket_id, String reason, float amount, String status, String user) { //I am used to VIEW TICKETS ie
+    public Ticket(int ticket_id, String reason, double amount, String status, String user) { //I am used to VIEW TICKETS ie
         this.ticket_id = ticket_id;
         //this.created_by = created_by;
         this.reason = reason;
@@ -56,7 +56,7 @@ public class Ticket {
         this.reason = reason;
     }
 
-    public float getAmount() {
+    public double getAmount() {
         return amount;
     }
 

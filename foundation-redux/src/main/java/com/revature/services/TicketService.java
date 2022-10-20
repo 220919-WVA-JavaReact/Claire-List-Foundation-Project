@@ -2,11 +2,10 @@ package com.revature.services;
 
 import com.revature.DAO.TicketDAO;
 import com.revature.models.Ticket;
-import com.revature.models.User;
 
 import java.math.RoundingMode;
-import java.sql.SQLOutput;
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,26 +15,16 @@ public class TicketService {
     Scanner io = new Scanner(System.in);
     //I need:: "user_name" to feed to the below. Can i just do a
     //if user.role_num == 2, get all tix. else, only user's own tickets.
-    public Ticket create(){
-       /// Ticket usertick = new Ticket();
-        //user.getUser_id();
+    public Ticket create(HashMap newTicket){
 
-       // User user = usertick.getUser();
-
-        System.out.println("For WHOMST is this ticket? (enter the user's ID)");
-        int createdBy = Integer.parseInt(io.nextLine()); //let's hope this stops the skipping...
-        System.out.println("enter the REASON for this reimbursement request"); //for some reason, I am being skipped...
-        String reason = io.nextLine();
-
-        System.out.println("Enter the AMOUNT you are requesting. Enter only decmial numbers!");
-        float amount = io.nextFloat();
+        String reason = (String) newTicket.get("reason");
+        double amount = (double) newTicket.get("amount");
+        int createdBy = (int) newTicket.get("user_id");
 
         DecimalFormat df = new DecimalFormat("##.##");
         df.setRoundingMode(RoundingMode.DOWN);
 
-
-    Ticket tix = td.createTicket(reason, Float.parseFloat(df.format(amount)), createdBy); //jesus CHRIST JAVA D:<
-   // tix.setUser(user);
+        Ticket tix = td.createTicket(reason, Double.parseDouble(df.format(amount)), createdBy); //jesus CHRIST JAVA D:<
         System.out.println("Your ticket: " + tix);
         return tix;
 

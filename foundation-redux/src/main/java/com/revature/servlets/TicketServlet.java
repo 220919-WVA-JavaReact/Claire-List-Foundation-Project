@@ -1,12 +1,16 @@
 package com.revature.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.models.Ticket;
+import com.revature.services.TicketService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 
 public class TicketServlet extends PatchServlet {
     private final ObjectMapper mapper;
@@ -26,8 +30,26 @@ public class TicketServlet extends PatchServlet {
         //get tickets by STATUS
     }
     @Override
-    protected void doPost (HttpServletRequest req, HttpServletResponse res){
+    protected void doPost (HttpServletRequest req, HttpServletResponse res) throws IOException {
         //CREATE ticket
+        System.out.println("[LOG] - TicketServlet received a POST request at " + LocalDateTime.now());
+        HashMap newTicket = mapper.readValue(req.getInputStream(), HashMap.class); //I NEED: USER_ID, REASON, AMOUNT from client!
+
+        TicketService ts = new TicketService();
+        String error;
+        Ticket created = ts.create(newTicket);
+
+        if (created == null){
+            error = "Unable to create your ticket, please try again.";
+            res.setContentType("application/json");
+            res.setStatus(400);
+            res.getWriter().write(error);
+        } else {
+            String respPayload = mapper.writeValueAsString(created);
+            res.setContentType("application/json");
+            res.setStatus(201);
+            res.getWriter().write(respPayload);
+        }
     }
 
 
