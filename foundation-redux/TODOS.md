@@ -1,6 +1,7 @@
-- [ ] FIX TICKET REJECTED ON ENTERING WHOLE NUMBERS
-- [ ] CREATE ORDER TIX BY STATUS
-- [ ] WHOLE TICKET ROUTES
+### NOTE: ###
+This file has been deprecated, though its contents have been preserved for posterity.
+Use either MVP-QUEUE.md or BUGFIX-QUEUE.md. 
+
 
 - [X] CHANGE SETTER FUNCS TO ACTUALLY WORK
 - [X] SERVICES NOW DOES VALIDATION ACTUAL OF REQUESTS
