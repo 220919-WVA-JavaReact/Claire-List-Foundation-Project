@@ -124,7 +124,7 @@ public class TicketServlet extends PatchServlet {
         Ticket updated = ts.updateStatus(tickId, statUpdate);
 
         if (updated == null){
-            error = "Unable to update your ticket, please provide either 'approved' or 'denied'.";
+            error = "Unable to update your ticket, please provide an existing ticket ID, and \n either 'approved' or 'denied'.";
             res.setStatus(400);
             res.getWriter().write(error);
         } else {

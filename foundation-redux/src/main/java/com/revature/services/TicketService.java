@@ -44,6 +44,9 @@ public class TicketService {
             case "denied":
             case "approved":
                  updated = td.updateStatus(id, update);
+                 if(updated.getTicket_id() == 0){
+                     updated = null;
+                 }
                  break;
             case"*":
           //      updated = null; //since I start as null, we don't have to do anything here, just break from this and return updated.
