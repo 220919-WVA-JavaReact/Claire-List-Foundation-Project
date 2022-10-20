@@ -36,39 +36,47 @@ public class TicketService {
         }
         return tix;
     }
-    public Ticket updateStatus(int id, String update){
+    public Ticket updateStatus(int id, String update) {
+        //TODO: CALL GET TICKET BY ID HERE, AND IF STATUS IS _NOT_ PENDING, RETURN NULL.
+        String checkStatus;
+        checkStatus = String.valueOf(td.getTicketById(id)); //TO BUILD!
         Ticket updated = null;
-        //check we have good data passed to our update string
+        if (!checkStatus.equals("pending")) { //BUILD ME !
+            return null;
+        } else {
+            //check we have good data passed to our update string
 
-        switch (update){
-            case "denied":
-            case "approved":
-                 updated = td.updateStatus(id, update);
-                 if(updated.getTicket_id() == 0){
-                     updated = null;
-                 }
-                 break;
-            case"*":
-          //      updated = null; //since I start as null, we don't have to do anything here, just break from this and return updated.
-                break;
+            switch (update) {
+                case "denied":
+                case "approved":
+                    updated = td.updateStatus(id, update);
+                    if (updated.getTicket_id() == 0) {
+                        updated = null;
+                    }
+                    break;
+                case "*":
+                    //      updated = null; //since I start as null, we don't have to do anything here, just break from this and return updated.
+                    break;
+            }
         }
 
-      return updated; //no it isn't always null java, you do not know what you are talking about.
+        return updated; //no it isn't always null java, you do not know what you are talking about.
 
+    }
+    public List<Ticket> view(String username){ //List<Ticket> view(User user
+
+
+        List<Ticket> allTix = td.getUserTickets(username); //I am creating PROBLEMS at runtime
+        if ( allTix.size() == 0 ){
+            return null;
+        } else {
+            return allTix;
+        }
     }
 
 }
 
-//    public List<Ticket> view(){ //List<Ticket> view(User user
-//        System.out.println("Here you can VIEW the tickets.");
-//        System.out.println("Enter your USERNAME for verification.");
-//        String user = io.nextLine();
-//
-//        List<Ticket> allTix = td.getUserTickets(user); //I am creating PROBLEMS at runtime
-////        System.out.println(allTix); //user is still NULL ??????????????
-////       // System.out.println("This USER's tickets: \n" + allTix);
-//        return allTix; //in case we want to DO something with this...
-//    }
+
 
 //    public List<Ticket> viewAll(){
 //

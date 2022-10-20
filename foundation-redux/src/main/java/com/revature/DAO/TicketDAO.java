@@ -165,4 +165,30 @@ public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS()
         return tickets;
 
     }
+
+    public String getTicketById(int id){
+        String ticket = "";
+        //SELECT status FROM tickets WHERE ticket_id = ?;
+
+        Connection conn = ConnectionUtil.getConnection();
+
+        try {
+            String sql = "SELECT status FROM tickets WHERE ticket_id = ?;";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet rs;
+
+            if ((rs = stmt.executeQuery()) != null){
+                rs.next();
+
+                String status = rs.getString("status");
+                ticket = status;
+            }
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return ticket;
+    }
+
 }

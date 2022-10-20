@@ -61,11 +61,25 @@ public class TicketServlet extends PatchServlet {
                     String payload = mapper.writeValueAsString(view);
                     res.getWriter().write(payload); //Redeploy! I have implemented mapper, above. Testing...
                 }
-
-
                 break;
+
             case "getuser":
                 //TODO: I AM AVABILABLE TO LOGGED IN USERS!
+                HashMap requsername = mapper.readValue(req.getInputStream(), HashMap.class);
+                String username = (String) requsername.get("user_name");
+                error = "Unable to find that user's tickets, please try again.";
+
+                List<Ticket> userTix = ts.view(username);
+
+                if(userTix == null){
+                    res.setStatus(422);
+                    res.getWriter().write(error);
+
+                } else {
+                    res.setStatus(200);
+                    String payload = mapper.writeValueAsString(userTix);
+                    res.getWriter().write(payload);
+                }
                 break;
         }
     }
@@ -124,7 +138,7 @@ public class TicketServlet extends PatchServlet {
         Ticket updated = ts.updateStatus(tickId, statUpdate);
 
         if (updated == null){
-            error = "Unable to update your ticket, please provide an existing ticket ID, and \n either 'approved' or 'denied'.";
+            error = "Unable to update your ticket, please provide an existing ticket ID, and \n either 'approved' or 'denied'. \n Note that you cannot currently change a ticket after it has been processed.";
             res.setStatus(400);
             res.getWriter().write(error);
         } else {
