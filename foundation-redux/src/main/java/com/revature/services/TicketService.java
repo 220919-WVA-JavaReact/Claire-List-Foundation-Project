@@ -16,14 +16,10 @@ public class TicketService {
     //I need:: "user_name" to feed to the below. Can i just do a
     //if user.role_num == 2, get all tix. else, only user's own tickets.
     public Ticket create(HashMap newTicket){
-        Object typeof = newTicket.get("amount");
 
-        if (typeof.getClass().getSimpleName() != "Double"){
-            return null;
-        } //LETS SEE IF THIS WORKS TOMORWROROW!
 
         String reason = (String) newTicket.get("reason");
-        Double amount = (double) newTicket.get("amount");
+        double amount = (double) newTicket.get("amount"); //might have to change to FLOAT again. Why did I not like floats...? (it broke at some point and I don't remember why
         int createdBy = (int) newTicket.get("user_id");
 
         DecimalFormat df = new DecimalFormat("##.##");
@@ -35,8 +31,6 @@ public class TicketService {
         } else {
             return tix;
         }
-
-
     }
 
     public List<Ticket> view(){ //List<Ticket> view(User user
@@ -45,8 +39,8 @@ public class TicketService {
         String user = io.nextLine();
 
         List<Ticket> allTix = td.getUserTickets(user); //I am creating PROBLEMS at runtime
-        System.out.println(allTix); //user is still NULL ??????????????
-       // System.out.println("This USER's tickets: \n" + allTix);
+//        System.out.println(allTix); //user is still NULL ??????????????
+//       // System.out.println("This USER's tickets: \n" + allTix);
         return allTix; //in case we want to DO something with this...
     }
 
@@ -71,6 +65,10 @@ public class TicketService {
 
     }
 
+    public List<Ticket> viewByStatus(String status){
+        List<Ticket> tix = td.getTixByStatus(status);
+        return tix;
+    }
     public Ticket updateStatus(int id, String update){
         return null;
         //I call the ticket dao -- td.updateStatus() ie,

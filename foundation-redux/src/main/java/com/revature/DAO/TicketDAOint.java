@@ -15,4 +15,6 @@ public interface TicketDAOint {
                                                                                                     // else, disallow
 
     List<Ticket> getAllTickets();
+
+    List<Ticket> getTixByStatus(String status);
 }

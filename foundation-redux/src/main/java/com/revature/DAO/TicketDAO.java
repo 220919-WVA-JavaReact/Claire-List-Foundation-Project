@@ -119,4 +119,34 @@ public class TicketDAO implements TicketDAOint { // TODO: CREATE GETALLTICKETS()
         Ticket ticket = new Ticket();
         return ticket;
     }
+
+    @Override
+    public List<Ticket> getTixByStatus(String status){
+        //SELECT users.user_name, tickets.ticket_id, tickets.reason, tickets.amount, tickets.status FROM tickets LEFT JOIN users ON users.user_id = tickets.created_by WHERE tickets.status = ?;
+        Connection conn = ConnectionUtil.getConnection();
+        List<Ticket> tickets = new ArrayList<>();
+        try{
+
+            String usSQL = "SELECT users.user_name, tickets.ticket_id, tickets.reason, tickets.amount, tickets.status FROM tickets LEFT JOIN users ON users.user_id = tickets.created_by WHERE tickets.status = ?;";
+            PreparedStatement stmt = conn.prepareStatement(usSQL);
+            stmt.setString(1, status);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int ticket_id = rs.getInt("ticket_id");
+                String reason = rs.getString("reason");
+                float amount = Float.parseFloat(rs.getString("amount"));
+                String resStatus = rs.getString("status");
+                String username = rs.getString("user_name");
+
+                Ticket ticket = new Ticket(ticket_id, reason, amount, resStatus, username);
+                tickets.add(ticket);
+            }
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return tickets;
+
+    }
 }
