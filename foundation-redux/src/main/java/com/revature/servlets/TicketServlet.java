@@ -47,13 +47,21 @@ public class TicketServlet extends PatchServlet {
 
         switch(route){
             case "getstatus":
-                //TODO: ADD ERROR HANDLING -- IF 'view', below, is EMPTY, do something ELSE!
+                error = "Unrecognized status, please supply 'pending', 'approved', or 'denied' only. \n If you have supplied one of these, perhaps no matching records exist in the database.";
                 String query = req.getHeader("status");
                 List<Ticket> view = ts.viewByStatus(query);
-                res.setStatus(200);
-                res.setContentType("application/json");
-                String payload = mapper.writeValueAsString(view);
-                res.getWriter().write(payload); //Redeploy! I have implemented mapper, above. Testing...
+
+                if (view == null){
+                    res.setStatus(422); //unprocessable entity
+                    res.getWriter().write(error);
+                } else {
+                    res.setStatus(200);
+                    res.setContentType("application/json");
+                    String payload = mapper.writeValueAsString(view);
+                    res.getWriter().write(payload); //Redeploy! I have implemented mapper, above. Testing...
+                }
+
+
                 break;
             case "getuser":
                 break;

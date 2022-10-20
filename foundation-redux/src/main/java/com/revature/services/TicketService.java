@@ -67,6 +67,9 @@ public class TicketService {
 
     public List<Ticket> viewByStatus(String status){
         List<Ticket> tix = td.getTixByStatus(status);
+        if (tix.size() == 0){
+            return null;
+        }
         return tix;
     }
     public Ticket updateStatus(int id, String update){
