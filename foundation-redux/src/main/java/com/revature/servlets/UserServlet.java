@@ -62,7 +62,7 @@ public class UserServlet extends HttpServlet {
         //case "/users/register", etc etc
         switch (route) {
             case "register":
-            error = "That username and/or email already exist in the register! Please try again."; //but you aren't ARE YOU JAVA????????
+            error = "That username and/or email already exists in the register! Please try again."; //but you aren't ARE YOU JAVA????????
             User created = us.register(newUser);
             if (created == null){ //register checks value, and if there is a mtching record in the database, returns null.
                 resp.setStatus(403);

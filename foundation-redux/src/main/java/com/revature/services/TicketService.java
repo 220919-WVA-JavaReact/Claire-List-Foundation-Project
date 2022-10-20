@@ -25,8 +25,12 @@ public class TicketService {
         df.setRoundingMode(RoundingMode.DOWN);
 
         Ticket tix = td.createTicket(reason, Double.parseDouble(df.format(amount)), createdBy); //jesus CHRIST JAVA D:<
-        System.out.println("Your ticket: " + tix);
-        return tix;
+        if (tix.getCreated_by() == 0){
+            return null;
+        } else {
+            return tix;
+        }
+
 
     }
 
