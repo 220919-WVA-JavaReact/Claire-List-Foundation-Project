@@ -47,7 +47,8 @@ public class TicketServlet extends PatchServlet {
 
         switch(route){
             case "getstatus":
-                String query = req.getQueryString();
+                //TODO: ADD ERROR HANDLING -- IF 'view', below, is EMPTY, do something ELSE!
+                String query = req.getHeader("status");
                 List<Ticket> view = ts.viewByStatus(query);
                 res.setStatus(200);
                 res.setContentType("application/json");
