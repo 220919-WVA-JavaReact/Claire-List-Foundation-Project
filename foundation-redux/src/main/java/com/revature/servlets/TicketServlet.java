@@ -39,7 +39,6 @@ public class TicketServlet extends PatchServlet {
             String error;
             ts = new TicketService();
 
-            //TODO: MAKE THIS ONLY ACCESSIBLE TO MANAGERS
             switch (route) {
                 case "getstatus":
 
