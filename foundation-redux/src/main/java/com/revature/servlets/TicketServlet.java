@@ -122,8 +122,6 @@ public class TicketServlet extends PatchServlet {
 
     @Override
     public void doPatch(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        //DOCUMENTATION: https://technology.amis.nl/software-development/java/handle-http-patch-request-with-java-servlet/
-        //for how I did this. I do not want to have to update entire record, so I am hacking a bit here. Let's hope this works...
 
         TicketService ts = new TicketService();
 
