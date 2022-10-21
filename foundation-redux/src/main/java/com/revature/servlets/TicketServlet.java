@@ -102,7 +102,7 @@ public class TicketServlet extends PatchServlet {
             Ticket created = ts.create(newTicket, auth.getUser_id());
 
             if (created == null){
-                error = "Unable to create your ticket, please try again. \n Be sure to enter a decimal amount, even for whole numbers (24.00 ie).";
+                error = "Unable to create your ticket, please try again. \n Be sure to enter both a reason and an amount.";
                 res.setContentType("application/json");
                 res.setStatus(400);
                 res.getWriter().write(error);
